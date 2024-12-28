@@ -328,7 +328,7 @@ const getServerDetailEvent = (event, serverId) => {
   serverDetailRef.value.hide()
 
   if (serverDetail.value?.id === serverId) {
-    serverDetail.value = null
+    serverDetail.value = {}
   } else {
     nextTick(() => {
       serverDetailRef.value.show(event)
