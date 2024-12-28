@@ -1,0 +1,41 @@
+version: "3"
+
+services:
+  megrez:
+    image: zklcdc/ubuntu-with-tzdata:latest
+    container_name: megrez
+    restart: always
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - $PWD/megrez:/home/megrez
+      - $PWD/config.yaml:/home/config.yaml
+    depends_on:
+      - "megrez-redis"
+      - "megrez-postgres"
+    command: sh -c "cd /home/ && /home/megrez -config /home/config.yml"
+    ports:
+      - 34567:34567
+
+  megrez-postgres:
+    image: postgres:16-alpine
+    container_name: megrez-postgres
+    restart: always
+    volumes:
+      - $PWD/data/postgres:/var/lib/postgresql/data
+    environment:
+      - TZ=Asia/Shanghai
+      - POSTGRES_DB=GpuManager
+      - POSTGRES_USER=GpuManager
+      - POSTGRES_PASSWORD=GpuManager
+  
+  megrez-redis:
+    image: redis:7-alpine
+    container_name: megrez-redis
+    restart: always
+    volumes:
+      - $PWD/data/redis:/data
+
+networks:
+  default:
+    name: megrez-network

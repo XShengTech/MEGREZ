@@ -1,0 +1,38 @@
+{
+    "name": "megrez-ui",
+    "version": "4.1.0",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "preview": "vite preview",
+        "lint": "eslint --fix . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
+    },
+    "dependencies": {
+        "@microsoft/clarity": "^1.0.0",
+        "@primevue/themes": "^4.0.0",
+        "axios": "^1.7.7",
+        "chart.js": "3.3.2",
+        "pinia": "^2.2.4",
+        "pinia-plugin-persistedstate": "^4.1.1",
+        "primeicons": "^6.0.1",
+        "primevue": "^4.0.0",
+        "vue": "^3.4.34",
+        "vue-router": "^4.4.0"
+    },
+    "devDependencies": {
+        "@primevue/auto-import-resolver": "^4.0.1",
+        "@rushstack/eslint-patch": "^1.8.0",
+        "@vitejs/plugin-vue": "^5.0.5",
+        "@vue/eslint-config-prettier": "^9.0.0",
+        "autoprefixer": "^10.4.19",
+        "eslint": "^8.57.0",
+        "eslint-plugin-vue": "^9.23.0",
+        "postcss": "^8.4.40",
+        "prettier": "^3.2.5",
+        "sass": "^1.55.0",
+        "tailwindcss": "^3.4.6",
+        "tailwindcss-primeui": "^0.3.2",
+        "unplugin-vue-components": "^0.27.3",
+        "vite": "^5.3.1"
+    }
+}
