@@ -14,6 +14,11 @@ import ToastService from 'primevue/toastservice';
 import '@/assets/styles.scss';
 import '@/assets/tailwind.css';
 
+import Clarity from '@microsoft/clarity';
+
+const projectId = 'pkz93ddlam'
+Clarity.init(projectId)
+
 const app = createApp(App);
 
 const pinia = createPinia()
