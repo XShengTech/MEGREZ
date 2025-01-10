@@ -90,8 +90,9 @@
 
 ## 🙋🏻‍♂️ 用户交流
 
-> 🚧 正在建设中...
+[![加入 飞书 群聊](https://img.shields.io/badge/加入飞书群聊-MEGREZ-2D5CF6?style=flat-square&logo=feishu)](https://applink.feishu.cn/client/chat/chatter/add_by_link?link_token=162v2304-4020-4c0a-af96-2b3caa5d4da6)
 
+[![Github Issus](https://img.shields.io/github/issues/XShengTech/MEGREZ?style=flat-square&logo=github)](https://github.com/XShengTech/MEGREZ/issues)
 
 
 ## ❗️ 免责声明
