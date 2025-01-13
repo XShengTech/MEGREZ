@@ -48,6 +48,8 @@ func Restart(instance *models.Instances) (err error) {
 		return err
 	}
 
+	go SetJupterPassword(server.IP, server.Port, server.Apikey, instance.ContainerName, instance.SshPasswd)
+
 	portBindings, err := GetPortForward(server.IP, server.Port, server.Apikey, instance.ContainerName)
 	if err != nil {
 		l.Error("get port forward error: %v", err)

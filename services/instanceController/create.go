@@ -47,6 +47,8 @@ func Create(instance *models.Instances) (containerName, volumeName string, err e
 		return "", "", err
 	}
 
+	go SetJupterPassword(server.IP, server.Port, server.Apikey, containerName, instance.SshPasswd)
+
 	portBindings, err := GetPortForward(server.IP, server.Port, server.Apikey, containerName)
 	if err != nil {
 		deleteInstance(server.IP, server.Port, server.Apikey, containerName)

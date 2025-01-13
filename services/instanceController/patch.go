@@ -95,6 +95,8 @@ func Patch(instance *models.Instances, gpuCount, volumeSize int, cpuOnly bool) (
 			return err
 		}
 
+		go SetJupterPassword(server.IP, server.Port, server.Apikey, instance.ContainerName, instance.SshPasswd)
+
 		portBindings, err := GetPortForward(server.IP, server.Port, server.Apikey, instance.ContainerName)
 		if err != nil {
 			l.Error("get port forward error: %v", err)
@@ -137,6 +139,8 @@ func Patch(instance *models.Instances, gpuCount, volumeSize int, cpuOnly bool) (
 		l.Error("set root password error: %v", err)
 		return err
 	}
+
+	go SetJupterPassword(server.IP, server.Port, server.Apikey, instance.ContainerName, instance.SshPasswd)
 
 	portBindings, err := GetPortForward(server.IP, server.Port, server.Apikey, instance.ContainerName)
 	if err != nil {
