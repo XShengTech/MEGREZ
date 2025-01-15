@@ -47,7 +47,10 @@ func Create(instance *models.Instances) (containerName, volumeName string, err e
 		return "", "", err
 	}
 
-	go SetJupterPassword(server.IP, server.Port, server.Apikey, containerName, instance.SshPasswd)
+	go func() {
+		SetJupterPassword(server.IP, server.Port, server.Apikey, containerName, instance.SshPasswd)
+		SetCodeServerPassword(server.IP, server.Port, server.Apikey, containerName, instance.SshPasswd)
+	}()
 
 	portBindings, err := GetPortForward(server.IP, server.Port, server.Apikey, containerName)
 	if err != nil {
@@ -63,6 +66,7 @@ func Create(instance *models.Instances) (containerName, volumeName string, err e
 	instance.TensorBoardAddress = server.IP + ":" + portBindings["6007"]
 	instance.JupyterAddress = server.IP + ":" + portBindings["8888"]
 	instance.GrafanaAddress = server.IP + ":" + portBindings["3000"]
+	instance.CodeServerAddress = server.IP + ":" + portBindings["8080"]
 
 	instance.Status = 0
 	result = database.DB.Save(&instance)

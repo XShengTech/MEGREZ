@@ -28,7 +28,7 @@ func detailHandler(ctx iris.Context) {
 	instance := models.Instances{
 		ID: id,
 	}
-	result := database.DB.Where("id = ?", id).Where("user_id = ?", userId).Select("id", "server_id", "cpu_only", "gpu_count", "volume_size", "ssh_address", "ssh_passwd", "tensor_board_address", "grafana_address", "status", "image_name", "created_at").First(&instance)
+	result := database.DB.Where("id = ?", id).Where("user_id = ?", userId).Select("id", "server_id", "cpu_only", "gpu_count", "volume_size", "ssh_address", "ssh_passwd", "tensor_board_address", "grafana_address", "code_server_address", "status", "image_name", "created_at").First(&instance)
 	if result.Error != nil {
 		l.Error("detail instance error: %v", result.Error)
 		middleware.Error(ctx, middleware.CodeInstanceDetailError, iris.StatusInternalServerError)

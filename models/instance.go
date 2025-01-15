@@ -39,12 +39,13 @@ type Instances struct {
 	VolumeName    string `json:"volume_name,omitempty" gorm:"type:varchar(255);not null"`
 	VolumeSize    int    `json:"volume_size" gorm:"not null"`
 
-	SshAddress         string `json:"ssh_address" gorm:"type:varchar(255);not null"`
-	SshPasswd          string `json:"ssh_passwd" gorm:"type:varchar(255);not null"`
-	JupyterAddress     string `json:"jupyter_address" gorm:"type:varchar(255);not null"`
-	TensorBoardAddress string `json:"tensor_board_address" gorm:"type:varchar(255);not null"`
-	GrafanaAddress     string `json:"grafana_address" gorm:"type:varchar(255);not null"`
-	Status             Status `json:"status" gorm:"not null"` // -1: fail, 0: running, 1: paused, 2: stopped, 3: readying
+	SshAddress         string `json:"ssh_address" gorm:"type:varchar(255)"`
+	SshPasswd          string `json:"ssh_passwd" gorm:"type:varchar(255)"`
+	JupyterAddress     string `json:"jupyter_address" gorm:"type:varchar(255)"`
+	TensorBoardAddress string `json:"tensor_board_address" gorm:"type:varchar(255)"`
+	GrafanaAddress     string `json:"grafana_address" gorm:"type:varchar(255)"`
+	CodeServerAddress  string `json:"code_server_address" gorm:"type:varchar(255)"`
+	Status             Status `json:"status" gorm:"not null"` // Detail in Constants
 
 	Label string `json:"label" gorm:"type:varchar(255)"`
 
