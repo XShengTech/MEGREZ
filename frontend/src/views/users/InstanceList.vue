@@ -434,6 +434,7 @@ const cpuOnlyMode = async (id) => {
   }, 100);
   await api.UserInstancesModify(id, { cpu_only: true }).then(async (res) => {
     toast.add({ severity: 'success', summary: '切换为无卡模式', detail: '已切换为无卡模式', life: 3000 });
+    await getInstances();
   }).catch(err => {
     console.error(err)
     toast.add({ severity: 'error', summary: '切换为无卡模式失败', detail: err.response.data.msg, life: 3000 });
@@ -447,6 +448,7 @@ const instanceStart = async (id) => {
   }, 100);
   await api.UserInstancesAction(id, { action: 1 }).then(async (res) => {
     toast.add({ severity: 'success', summary: '开机', detail: '实例已开机', life: 3000 });
+    await getInstances();
   }).catch(err => {
     console.error(err)
     toast.add({ severity: 'error', summary: '开机失败', detail: err.response.data.msg, life: 3000 });
@@ -460,6 +462,7 @@ const instancePause = async (id) => {
   }, 100);
   await api.UserInstancesAction(id, { action: 2 }).then(async (res) => {
     toast.add({ severity: 'success', summary: '暂停实例', detail: '实例已暂停', life: 3000 });
+    await getInstances();
   }).catch(err => {
     console.error(err)
     toast.add({ severity: 'error', summary: '暂停实例失败', detail: err.response.data.msg, life: 3000 });
@@ -473,6 +476,7 @@ const instanceStop = async (id) => {
   }, 100);
   await api.UserInstancesAction(id, { action: 3 }).then(async (res) => {
     toast.add({ severity: 'success', summary: '停止实例', detail: '实例已停止', life: 3000 });
+    await getInstances();
   }).catch(err => {
     console.error(err)
     toast.add({ severity: 'error', summary: '停止实例失败', detail: err.response.data.msg, life: 3000 });
@@ -486,6 +490,7 @@ const instanceRestart = async (id) => {
   }, 100);
   await api.UserInstancesAction(id, { action: 4 }).then(async (res) => {
     toast.add({ severity: 'success', summary: '重启实例', detail: '实例已重启', life: 3000 });
+    await getInstances();
   }).catch(err => {
     console.error(err)
     toast.add({ severity: 'error', summary: '重启实例失败', detail: err.response.data.msg, life: 3000 });
@@ -500,6 +505,7 @@ const instanceModify = async () => {
   await api.UserInstancesModify(instanceDetail.value.id, instanceConfiguration.value).then(async (res) => {
     toast.add({ severity: 'success', summary: '调整配置', detail: '已调整配置', life: 3000 });
     instanceModifyVisible.value = false
+    await getInstances();
   }).catch(err => {
     console.error(err)
     toast.add({ severity: 'error', summary: '调整配置失败', detail: err.response.data.msg, life: 3000 });
@@ -513,6 +519,7 @@ const instanceDelete = async (id) => {
   }, 100);
   await api.UserInstancesDelete(id).then(async (res) => {
     toast.add({ severity: 'success', summary: '释放实例', detail: '实例已释放', life: 3000 });
+    await getInstances();
   }).catch(err => {
     console.error(err)
     toast.add({ severity: 'error', summary: '释放实例失败', detail: err.response.data.msg, life: 3000 });
