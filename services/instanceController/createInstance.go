@@ -45,6 +45,9 @@ func createInstance(ip string, port int, apikey string,
 			"8080",  // Code-Server
 			"34567", // Custom Port
 		},
+		Env: []string{
+			"NVIDIA_DRIVER_CAPABILITIES=video,compute,utility",
+		},
 	}
 
 	if volumeName != "" {
