@@ -24,7 +24,7 @@ type Users struct {
 }
 
 func (u *Users) PasswordHash(password string) string {
-	return crypto.Sha256(password + u.Email + config.GetSystemSalt())
+	return crypto.Sha256(password + u.CreatedAt.GoString() + config.GetSystemSalt())
 }
 
 func (u *Users) CheckPassword(password string) bool {
