@@ -23,10 +23,15 @@ func systemInit() (err error) {
 		Email:    "admin@gpuManager.com",
 		Role:     3,
 	}
-	user.Password = user.PasswordHash("admin123456")
 	result := database.DB.Create(&user)
 	if result.Error != nil {
 		l.Error("Create admin user failed, Error: %v", result.Error)
+		return
+	}
+	user.Password = user.PasswordHash("admin123456")
+	result = database.DB.Save(&user)
+	if result.Error != nil {
+		l.Error("Save admin user failed, Error: %v", result.Error)
 		return
 	}
 

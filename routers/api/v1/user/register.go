@@ -35,7 +35,6 @@ func registerHandler(ctx iris.Context) {
 		Role:     0,
 		Balance:  0,
 	}
-	user.Password = user.PasswordHash(userReq.Password)
 
 	if !config.GetSystemVerify() {
 		user.Role = 1
@@ -44,6 +43,14 @@ func registerHandler(ctx iris.Context) {
 	result := database.DB.Create(&user)
 	if result.Error != nil {
 		l.Error("create user error: %v", result.Error)
+		middleware.Error(ctx, middleware.CodeRegisterError, iris.StatusInternalServerError)
+		return
+	}
+
+	user.Password = user.PasswordHash(userReq.Password)
+	result = database.DB.Save(&user)
+	if result.Error != nil {
+		l.Error("save user error: %v", result.Error)
 		middleware.Error(ctx, middleware.CodeRegisterError, iris.StatusInternalServerError)
 		return
 	}

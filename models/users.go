@@ -1,8 +1,10 @@
 package models
 
 import (
+	"fmt"
 	"megrez/libs/crypto"
 	"megrez/services/config"
+	"strconv"
 	"time"
 
 	"gorm.io/gorm"
@@ -24,7 +26,8 @@ type Users struct {
 }
 
 func (u *Users) PasswordHash(password string) string {
-	return crypto.Sha256(password + u.CreatedAt.GoString() + config.GetSystemSalt())
+	fmt.Println(password, u.CreatedAt.UnixMicro(), config.GetSystemSalt())
+	return crypto.Sha256(password + strconv.FormatInt(u.CreatedAt.UnixMicro(), 10) + config.GetSystemSalt())
 }
 
 func (u *Users) CheckPassword(password string) bool {
