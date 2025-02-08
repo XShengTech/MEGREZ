@@ -14,11 +14,25 @@ import (
 )
 
 var (
+	BRANCH    string
+	VERSION   string
+	COMMIT    string
+	GoVersion string
+	BuildTime string
+)
+
+var (
 	configFilePath = "config.yml"
 	l              = logger.Logger.Clone()
 )
 
 func main() {
+	l.Info("Branch: %s", BRANCH)
+	l.Info("Version: %s", VERSION)
+	l.Info("Commit: %s", COMMIT)
+	l.Info("Go Version: %s", GoVersion)
+	l.Info("Build Time: %s", BuildTime)
+
 	flag.StringVar(&configFilePath, "c", "config.yml", "config file path")
 	flag.Parse()
 
