@@ -44,7 +44,9 @@
 ## 📝 安装 & 使用教程
 
 > [!WARNING]
-> 查看 [**>>> 🚧 正在施工中 <<<**]()
+> 部署仓库: [XShengTech/MEGREZ-Deploy](https://github.com/XShengTech/MEGREZ-Deploy)
+> 
+> 查看文档 [**>>> 🚧 正在施工中 <<<**]()
 
 
 
