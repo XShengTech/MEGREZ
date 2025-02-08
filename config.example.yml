@@ -10,3 +10,5 @@ database:
 redis:
   host: ms-redis
   port: 6379
+system:
+  verify: false
