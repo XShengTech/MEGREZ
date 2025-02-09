@@ -53,6 +53,10 @@ func GetSystemVerify() bool {
 	return config.GetSystemVerify()
 }
 
+func GetSystemMountDir() string {
+	return config.GetSystemMountDir()
+}
+
 func Save() error {
 	return config.Save()
 }

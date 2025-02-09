@@ -12,3 +12,4 @@ redis:
   port: 6379
 system:
   verify: false
+  mount_dir: /path/to/mount

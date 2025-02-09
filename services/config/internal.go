@@ -40,6 +40,10 @@ func (c *configStruct) GetSystemVerify() bool {
 	return c.System.Verify
 }
 
+func (c *configStruct) GetSystemMountDir() string {
+	return c.System.MountDir
+}
+
 func (c *configStruct) Save() error {
 	return c.save()
 }

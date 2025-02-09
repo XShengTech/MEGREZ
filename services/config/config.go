@@ -41,8 +41,9 @@ type logStruct struct {
 }
 
 type systemStruct struct {
-	Salt   string `yaml:"salt,omitempty"`
-	Verify bool   `yaml:"verify,omitempty"`
+	Salt     string `yaml:"salt,omitempty"`
+	Verify   bool   `yaml:"verify,omitempty"`
+	MountDir string `yaml:"mount_dir,omitempty"`
 }
 
 var config = configStruct{

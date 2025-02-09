@@ -6,6 +6,7 @@ import (
 	"errors"
 	"megrez/libs/crypto"
 	"megrez/libs/request"
+	"megrez/services/config"
 	"strconv"
 )
 
@@ -56,11 +57,14 @@ func createInstance(ip string, port int, apikey string,
 				Src:  volumeName,
 				Dest: "/root/megrez-tmp",
 			},
-			{
-				Src:  "/data/pub",
-				Dest: "/root/megrez-pub",
-			},
 		}
+	}
+
+	if config.GetSystemMountDir() != "" {
+		data.Binds = append(data.Binds, bindStruct{
+			Src:  config.GetSystemMountDir(),
+			Dest: "/root/megrez",
+		})
 	}
 
 	reqBytes, err := json.Marshal(data)
