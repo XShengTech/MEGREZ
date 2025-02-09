@@ -1,7 +1,6 @@
 package models
 
 import (
-	"fmt"
 	"megrez/libs/crypto"
 	"megrez/services/config"
 	"strconv"
@@ -26,7 +25,6 @@ type Users struct {
 }
 
 func (u *Users) PasswordHash(password string) string {
-	fmt.Println(password, u.CreatedAt.UnixMicro(), config.GetSystemSalt())
 	return crypto.Sha256(password + strconv.FormatInt(u.CreatedAt.UnixMicro(), 10) + config.GetSystemSalt())
 }
 
