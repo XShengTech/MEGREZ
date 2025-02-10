@@ -40,14 +40,14 @@ func deleteHandler(ctx iris.Context) {
 		return
 	}
 
-	result = database.DB.Model(&instance).Update("status", models.InstanceDeleting)
+	result = database.DB.Model(&instance).Update("status", models.InstanceStatusDeleting)
 	if result.Error != nil {
 		l.Error("update instance status error: %v", result.Error)
 		middleware.Error(ctx, middleware.CodeServerSaveError, iris.StatusInternalServerError)
 		return
 	}
 
-	if status == models.InstanceRunning || status == models.InstancePaused {
+	if status == models.InstanceStatusRunning || status == models.InstanceStatusPaused {
 		redis.RawDB.IncrBy(ctx, "remain_gpu:server:"+strconv.Itoa(int(instance.ServerID)), int64(instance.GpuCount))
 	}
 	redis.RawDB.IncrBy(ctx, "remain_volume:server:"+strconv.Itoa(int(instance.ServerID)), int64(instance.VolumeSize+30))

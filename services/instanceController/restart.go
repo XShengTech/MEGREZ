@@ -12,10 +12,10 @@ import (
 func Restart(instance *models.Instances) (err error) {
 	l.SetFunction("Restart")
 
-	if instance.Status == models.InstanceStopped || instance.Status == models.InstancePaused {
-		instance.Status = models.InstanceStarting
+	if instance.Status == models.InstanceStatusStopped || instance.Status == models.InstanceStatusPaused {
+		instance.Status = models.InstanceStatusStarting
 	} else {
-		instance.Status = models.InstanceRestarting
+		instance.Status = models.InstanceStatusRestarting
 	}
 	result := database.DB.Save(&instance)
 	if result.Error != nil {
@@ -65,7 +65,7 @@ func Restart(instance *models.Instances) (err error) {
 	instance.GrafanaAddress = server.IP + ":" + portBindings["3000"]
 	instance.CodeServerAddress = server.IP + ":" + portBindings["8080"]
 
-	instance.Status = models.InstanceRunning
+	instance.Status = models.InstanceStatusRunning
 	result = database.DB.Save(&instance)
 	if result.Error != nil {
 		l.Error("save instance error: %v", result.Error)

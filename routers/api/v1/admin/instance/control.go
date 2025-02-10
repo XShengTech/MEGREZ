@@ -45,17 +45,17 @@ func controlHandler(ctx iris.Context) {
 		return
 	}
 
-	if req.Action == instanceController.ActionStop && instance.Status != models.InstanceRunning && instance.Status != models.InstancePaused {
+	if req.Action == instanceController.ActionStop && instance.Status != models.InstanceStatusRunning && instance.Status != models.InstanceStatusPaused {
 		middleware.Error(ctx, middleware.CodeInstanceStatusError, iris.StatusBadRequest)
 		return
 	}
 
-	if req.Action == instanceController.ActionPause && instance.Status != models.InstanceRunning {
+	if req.Action == instanceController.ActionPause && instance.Status != models.InstanceStatusRunning {
 		middleware.Error(ctx, middleware.CodeInstanceStatusError, iris.StatusBadRequest)
 		return
 	}
 
-	if req.Action == instanceController.ActionStart && instance.Status != models.InstanceStopped && instance.Status != models.InstancePaused {
+	if req.Action == instanceController.ActionStart && instance.Status != models.InstanceStatusStopped && instance.Status != models.InstanceStatusPaused {
 		middleware.Error(ctx, middleware.CodeInstanceStatusError, iris.StatusBadRequest)
 		return
 	}
@@ -71,7 +71,7 @@ func controlHandler(ctx iris.Context) {
 	}
 
 	status := instance.Status
-	if status == models.InstanceStopped && (req.Action == instanceController.ActionStart || req.Action == instanceController.ActionRestart) {
+	if status == models.InstanceStatusStopped && (req.Action == instanceController.ActionStart || req.Action == instanceController.ActionRestart) {
 		remainGpu, err := redis.RawDB.IncrBy(ctx, "remain_gpu:server:"+strconv.Itoa(int(server.ID)), int64(-instance.GpuCount)).Result()
 		if err != nil {
 			l.Error("incrby gpu num error: %v", err)
@@ -88,7 +88,7 @@ func controlHandler(ctx iris.Context) {
 
 	switch req.Action {
 	case instanceController.ActionStart:
-		result = database.DB.Model(&instance).Update("status", models.InstanceStarting)
+		result = database.DB.Model(&instance).Update("status", models.InstanceStatusStarting)
 		if result.Error != nil {
 			l.Error("update instance status error: %v", result.Error)
 			middleware.Error(ctx, middleware.CodeInstanceStartError, iris.StatusInternalServerError)
@@ -96,7 +96,7 @@ func controlHandler(ctx iris.Context) {
 		}
 
 	case instanceController.ActionPause:
-		result = database.DB.Model(&instance).Update("status", models.InstancePausing)
+		result = database.DB.Model(&instance).Update("status", models.InstanceStatusPausing)
 		if result.Error != nil {
 			l.Error("update instance status error: %v", result.Error)
 			middleware.Error(ctx, middleware.CodeInstancePauseError, iris.StatusInternalServerError)
@@ -104,7 +104,7 @@ func controlHandler(ctx iris.Context) {
 		}
 
 	case instanceController.ActionStop:
-		result = database.DB.Model(&instance).Update("status", models.InstanceStopping)
+		result = database.DB.Model(&instance).Update("status", models.InstanceStatusStopping)
 		if result.Error != nil {
 			l.Error("update instance status error: %v", result.Error)
 			middleware.Error(ctx, middleware.CodeInstanceStopError, iris.StatusInternalServerError)
@@ -113,7 +113,7 @@ func controlHandler(ctx iris.Context) {
 		redis.RawDB.IncrBy(ctx, "remain_gpu:server:"+strconv.Itoa(int(server.ID)), int64(instance.GpuCount))
 
 	case instanceController.ActionRestart:
-		result = database.DB.Model(&instance).Update("status", models.InstanceRestarting)
+		result = database.DB.Model(&instance).Update("status", models.InstanceStatusRestarting)
 		if result.Error != nil {
 			l.Error("update instance status error: %v", result.Error)
 			middleware.Error(ctx, middleware.CodeInstanceRestartError, iris.StatusInternalServerError)

@@ -12,7 +12,7 @@ import (
 func Stop(instance *models.Instances) (err error) {
 	l.SetFunction("Stop")
 
-	instance.Status = models.InstanceStopping
+	instance.Status = models.InstanceStatusStopping
 	result := database.DB.Save(&instance)
 	if result.Error != nil {
 		l.Error("save instance error: %v", result.Error)
@@ -34,7 +34,7 @@ func Stop(instance *models.Instances) (err error) {
 		return err
 	}
 
-	instance.Status = models.InstanceStopped
+	instance.Status = models.InstanceStatusStopped
 	result = database.DB.Save(&instance)
 	if result.Error != nil {
 		l.Error("save instance error: %v", result.Error)

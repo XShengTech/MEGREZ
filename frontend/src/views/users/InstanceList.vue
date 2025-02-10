@@ -386,37 +386,37 @@ const showMenu = (event, instance) => {
     let newItem = { ...item }
     switch (item.label) {
       case '无卡模式开机':
-        if (instanceDetail.value.cpu_only === true || instanceDetail.value.status !== statusStoped.value) {
+        if (instanceDetail.value.cpu_only === true || instanceDetail.value.status !== statusStoped.value || instanceDetail.value.status === statusFail.value) {
           newItem.disabled = true
         }
         break
       case '开机':
-        if (instanceDetail.value.status === statusRunning.value || statusIng.indexOf(instanceDetail.value.status) !== -1) {
+        if (instanceDetail.value.status === statusRunning.value || statusIng.indexOf(instanceDetail.value.status) !== -1 || instanceDetail.value.status === statusFail.value) {
           newItem.disabled = true
         }
         break
       case '关机':
-        if (instanceDetail.value.status === statusStoped.value || statusIng.indexOf(instanceDetail.value.status) !== -1) {
+        if (instanceDetail.value.status === statusStoped.value || statusIng.indexOf(instanceDetail.value.status) !== -1 || instanceDetail.value.status === statusFail.value) {
           newItem.disabled = true
         }
         break
       case '暂停':
-        if (instanceDetail.value.status === statusPaused.value || instanceDetail.value.status === statusStoped.value || statusIng.indexOf(instanceDetail.value.status) !== -1) {
+        if (instanceDetail.value.status === statusPaused.value || instanceDetail.value.status === statusStoped.value || statusIng.indexOf(instanceDetail.value.status) !== -1 || instanceDetail.value.status === statusFail.value) {
           newItem.disabled = true
         }
         break
       case '重启实例':
-        if (statusIng.indexOf(instanceDetail.value.status) !== -1) {
+        if (statusIng.indexOf(instanceDetail.value.status) !== -1 || instanceDetail.value.status === statusFail.value) {
           newItem.disabled = true
         }
         break
       case '调整配置':
-        if (instanceDetail.value.status !== statusStoped.value) {
+        if (instanceDetail.value.status !== statusStoped.value || instanceDetail.value.status === statusFail.value) {
           newItem.disabled = true
         }
         break
       case '删除实例':
-        if (instanceDetail.value.status === statusDeleting.value) {
+        if (instanceDetail.value.status === statusDeleting.value || instanceDetail.value.status === statusFail.value) {
           newItem.disabled = true
         }
         break

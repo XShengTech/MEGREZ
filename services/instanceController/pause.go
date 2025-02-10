@@ -12,7 +12,7 @@ import (
 func Pause(instance *models.Instances) (err error) {
 	l.SetFunction("Pause")
 
-	instance.Status = models.InstancePausing
+	instance.Status = models.InstanceStatusPausing
 	result := database.DB.Save(&instance)
 	if result.Error != nil {
 		l.Error("save instance error: %v", result.Error)
@@ -34,7 +34,7 @@ func Pause(instance *models.Instances) (err error) {
 		return err
 	}
 
-	instance.Status = models.InstancePaused
+	instance.Status = models.InstanceStatusPaused
 	result = database.DB.Save(&instance)
 	if result.Error != nil {
 		l.Error("save instance error: %v", result.Error)

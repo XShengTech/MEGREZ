@@ -8,23 +8,34 @@ import (
 )
 
 type Status int
+type Action int
 
 const (
-	InstanceFail    Status = -1
-	InstanceRunning Status = 0
-	InstancePaused  Status = 1
-	InstanceStopped Status = 2
+	InstanceStatusFail    Status = -1
+	InstanceStatusRunning Status = 0
+	InstanceStatusPaused  Status = 1
+	InstanceStatusStopped Status = 2
 
-	InstanceReady      Status = 3
-	InstanceStarting   Status = 4
-	InstanceStopping   Status = 5
-	InstancePausing    Status = 6
-	InstanceRestarting Status = 7
-	InstanceModifying  Status = 8
-	InstanceDeleting   Status = 9
+	InstanceStatusReady      Status = 3
+	InstanceStatusStarting   Status = 4
+	InstanceStatusStopping   Status = 5
+	InstanceStatusPausing    Status = 6
+	InstanceStatusRestarting Status = 7
+	InstanceStatusModifying  Status = 8
+	InstanceStatusDeleting   Status = 9
 )
 
-var instanceIngStatus = []Status{InstanceReady, InstanceStarting, InstanceStopping, InstancePausing, InstanceRestarting, InstanceModifying, InstanceDeleting}
+const (
+	InstanceActionCreate  Action = 1
+	InstanceActionStart   Action = 2
+	InstanceActionPause   Action = 3
+	InstanceActionStop    Action = 4
+	InstanceActionRestart Action = 5
+	InstanceActionModify  Action = 6
+	InstanceActionDelete  Action = 7
+)
+
+var instanceIngStatus = []Status{InstanceStatusReady, InstanceStatusStarting, InstanceStatusStopping, InstanceStatusPausing, InstanceStatusRestarting, InstanceStatusModifying, InstanceStatusDeleting}
 
 type Instances struct {
 	ID uint `json:"id" gorm:"primary_key;autoIncrement;index"`
@@ -46,6 +57,7 @@ type Instances struct {
 	GrafanaAddress     string `json:"grafana_address" gorm:"type:varchar(255)"`
 	CodeServerAddress  string `json:"code_server_address" gorm:"type:varchar(255)"`
 	Status             Status `json:"status" gorm:"not null"` // Detail in Constants
+	FromAction         Action `json:"from_action"`
 
 	Label string `json:"label" gorm:"type:varchar(255)"`
 

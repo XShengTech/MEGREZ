@@ -34,4 +34,5 @@ func InitInstances(party router.Party) {
 	party.Post("/{id:uint}", middleware.SuperAdminCheck, modifyHandler)
 	party.Post("/{id:uint}/label", middleware.SuperAdminCheck, labelHandler)
 	party.Delete("/{id:uint}", middleware.SuperAdminCheck, deleteHandler)
+	party.Delete("/{id:uint}/force", middleware.SuperAdminCheck, forceDeleteHandler)
 }

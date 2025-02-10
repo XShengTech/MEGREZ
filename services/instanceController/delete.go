@@ -8,7 +8,7 @@ import (
 func Delete(instance *models.Instances) (err error) {
 	l.SetFunction("Delete")
 
-	instance.Status = models.InstanceDeleting
+	instance.Status = models.InstanceStatusDeleting
 	result := database.DB.Save(&instance)
 	if result.Error != nil {
 		l.Error("save instance error: %v", result.Error)

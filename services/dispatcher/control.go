@@ -37,35 +37,37 @@ func control(serverID uint, data Data) (err error) {
 		return errors.New("instance status error")
 	}
 
-	if data.Action == instanceController.ActionPause && data.Status != models.InstanceRunning {
+	if data.Action == instanceController.ActionPause && data.Status != models.InstanceStatusRunning {
 		lc.Error("instance status error")
 		return errors.New("instance status error")
 	}
 
-	if data.Action == instanceController.ActionStart && data.Status != models.InstanceStopped && data.Status != models.InstancePaused {
+	if data.Action == instanceController.ActionStart && data.Status != models.InstanceStatusStopped && data.Status != models.InstanceStatusPaused {
 		lc.Error("instance status error")
 		return errors.New("instance status error")
 	}
 
 	switch data.Action {
 	case instanceController.ActionStart:
-		if data.Status == models.InstancePaused {
+		if data.Status == models.InstanceStatusPaused {
 			err = instanceController.Continue(&instance)
 			if err != nil {
+				database.DB.Model(&instance).Update("status", models.InstanceStatusFail).Update("from_action", models.InstanceActionStart)
 				lc.Error("instance continue error: %v", err)
 				return
 			}
-		} else if data.Status == models.InstanceStopped {
+		} else if data.Status == models.InstanceStatusStopped {
 			err = instanceController.Restart(&instance)
 			if err != nil {
-				lc.Error("instance restart error: %v", err)
 				ctx := context.Background()
 				redis.RawDB.IncrBy(ctx, "remain_gpu:server:"+strconv.Itoa(int(serverID)), int64(instance.GpuCount))
+				database.DB.Model(&instance).Update("status", models.InstanceStatusFail).Update("from_action", models.InstanceActionRestart)
+				lc.Error("instance restart error: %v", err)
 				return
 			}
 		}
 
-		if data.Status == models.InstanceStopped && instance.Status == models.InstanceRunning {
+		if data.Status == models.InstanceStatusStopped && instance.Status == models.InstanceStatusRunning {
 			server.GpuUsed += instance.GpuCount
 			result = database.DB.Save(&server)
 			if result.Error != nil {
@@ -79,6 +81,7 @@ func control(serverID uint, data Data) (err error) {
 	case instanceController.ActionPause:
 		err = instanceController.Pause(&instance)
 		if err != nil {
+			database.DB.Model(&instance).Update("status", models.InstanceStatusFail).Update("from_action", models.InstanceActionPause)
 			lc.Error("instance pause error: %v", err)
 			return
 		}
@@ -88,14 +91,16 @@ func control(serverID uint, data Data) (err error) {
 	case instanceController.ActionStop:
 		err = instanceController.Stop(&instance)
 		if err != nil {
+			database.DB.Model(&instance).Update("status", models.InstanceStatusFail).Update("from_action", models.InstanceActionStop)
 			lc.Error("instance stop error: %v", err)
 			return
 		}
 
-		if (data.Status == models.InstanceRunning || data.Status == models.InstancePaused) && instance.Status == models.InstanceStopped {
+		if (data.Status == models.InstanceStatusRunning || data.Status == models.InstanceStatusPaused) && instance.Status == models.InstanceStatusStopped {
 			server.GpuUsed -= instance.GpuCount
 			result = database.DB.Save(&server)
 			if result.Error != nil {
+				database.DB.Model(&instance).Update("status", models.InstanceStatusFail)
 				lc.Error("save server error: %v", result.Error)
 				return result.Error
 			}
@@ -106,14 +111,16 @@ func control(serverID uint, data Data) (err error) {
 	case instanceController.ActionRestart:
 		err = instanceController.Restart(&instance)
 		if err != nil {
+			database.DB.Model(&instance).Update("status", models.InstanceStatusFail).Update("from_action", models.InstanceActionRestart)
 			lc.Error("instance restart error: %v", err)
 			return
 		}
 
-		if data.Status == models.InstanceStopped && instance.Status == models.InstanceRunning {
+		if data.Status == models.InstanceStatusStopped && instance.Status == models.InstanceStatusRunning {
 			server.GpuUsed += instance.GpuCount
 			result = database.DB.Save(&server)
 			if result.Error != nil {
+				database.DB.Model(&instance).Update("status", models.InstanceStatusFail)
 				lc.Error("save server error: %v", result.Error)
 				return result.Error
 			}

@@ -34,7 +34,7 @@ type volumePatchStruct struct {
 func Patch(instance *models.Instances, gpuCount, volumeSize int, cpuOnly bool) (err error) {
 	l.SetFunction("Patch")
 
-	instance.Status = models.InstanceModifying
+	instance.Status = models.InstanceStatusModifying
 	result := database.DB.Save(&instance)
 	if result.Error != nil {
 		l.Error("save instance error: %v", result.Error)
@@ -42,7 +42,7 @@ func Patch(instance *models.Instances, gpuCount, volumeSize int, cpuOnly bool) (
 	}
 
 	if gpuCount == instance.GpuCount && volumeSize == instance.VolumeSize && cpuOnly == instance.CpuOnly {
-		instance.Status = models.InstanceStopped
+		instance.Status = models.InstanceStatusStopped
 		result = database.DB.Save(&instance)
 		if result.Error != nil {
 			l.Error("save instance error: %v", result.Error)
@@ -113,7 +113,7 @@ func Patch(instance *models.Instances, gpuCount, volumeSize int, cpuOnly bool) (
 
 		instance.CpuOnly = true
 		instance.GpuCount = 0
-		instance.Status = models.InstanceRunning
+		instance.Status = models.InstanceStatusRunning
 		result = database.DB.Save(&instance)
 		if result.Error != nil {
 			l.Error("save instance error: %v", result.Error)
@@ -162,7 +162,7 @@ func Patch(instance *models.Instances, gpuCount, volumeSize int, cpuOnly bool) (
 
 	instance.CpuOnly = false
 	instance.GpuCount = gpuCount
-	instance.Status = models.InstanceRunning
+	instance.Status = models.InstanceStatusRunning
 	result = database.DB.Save(&instance)
 	if result.Error != nil {
 		l.Error("save instance error: %v", result.Error)

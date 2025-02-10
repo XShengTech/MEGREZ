@@ -35,15 +35,16 @@ func delete(serverID uint, data Data) (err error) {
 	if err != nil {
 		lc.Error("delete instance error: %v", err)
 		ctx := context.Background()
-		if data.Status == models.InstanceRunning || data.Status == models.InstancePaused {
+		if data.Status == models.InstanceStatusRunning || data.Status == models.InstanceStatusPaused {
 			redis.RawDB.IncrBy(ctx, "remain_gpu:server:"+strconv.Itoa(int(serverID)), int64(-instance.GpuCount))
 		}
 		redis.RawDB.IncrBy(ctx, "remain_volume:server:"+strconv.Itoa(int(serverID)), int64(-instance.VolumeSize-30))
+		database.DB.Model(&instance).Update("status", models.InstanceStatusFail).Update("from_action", models.InstanceActionDelete)
 		return
 	}
 
 	server.VolumeUsed -= instance.VolumeSize + 30
-	if data.Status == models.InstanceRunning || data.Status == models.InstancePaused {
+	if data.Status == models.InstanceStatusRunning || data.Status == models.InstanceStatusPaused {
 		server.GpuUsed -= instance.GpuCount
 	}
 	result = database.DB.Save(&server)

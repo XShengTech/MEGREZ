@@ -63,7 +63,7 @@ func modifyHandler(ctx iris.Context) {
 		return
 	}
 
-	if instance.Status != models.InstanceStopped {
+	if instance.Status != models.InstanceStatusStopped {
 		middleware.Error(ctx, middleware.CodeInstanceStatusError, iris.StatusBadRequest)
 		return
 	}
@@ -112,7 +112,7 @@ func modifyHandler(ctx iris.Context) {
 	}
 
 	status := instance.Status
-	result = database.DB.Model(&instance).Update("status", models.InstanceModifying)
+	result = database.DB.Model(&instance).Update("status", models.InstanceStatusModifying)
 	if result.Error != nil {
 		l.Error("update instance status error: %v", result.Error)
 		middleware.Error(ctx, middleware.CodeServerSaveError, iris.StatusInternalServerError)

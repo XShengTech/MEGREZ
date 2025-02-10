@@ -80,7 +80,7 @@ func addHandler(ctx iris.Context) {
 
 		SshPasswd: crypto.Hex(16),
 
-		Status: models.InstanceReady,
+		Status: models.InstanceStatusReady,
 	}
 	result = database.DB.Create(&instance)
 	if result.Error != nil {
