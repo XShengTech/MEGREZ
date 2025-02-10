@@ -90,6 +90,9 @@ export default {
   AdminInstancesDelete(id) {
     return ajax(`admin/instances/${id}`, 'delete', {})
   },
+  AdminInstancesForceDelete(id) {
+    return ajax(`admin/instances/${id}/force`, 'delete', {})
+  },
 
   AdminUserList(params) {
     return ajax('admin/users', 'get', { params })

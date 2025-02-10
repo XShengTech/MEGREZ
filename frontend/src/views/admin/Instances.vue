@@ -288,6 +288,7 @@ const instanceMenuItemsTemplate = ref([
   { label: '重启实例', icon: 'pi pi-refresh !text-sky-500', command: () => { instanceRestart(instanceDetail.value.id) } },
   { label: '调整配置', icon: 'pi pi-sliders-h !text-indigo-500', command: () => { openInstanceModify() } },
   { label: '删除实例', icon: 'pi pi-trash !text-red-500', command: () => { openInstanceDelete() } },
+  { label: '强制删除', icon: 'pi pi-exclamation-triangle !text-red-500', command: () => { openInstanceForceDelete() } }
 ])
 const instanceMenuItems = ref([])
 
@@ -410,6 +411,11 @@ const showMenu = (event, instance) => {
           newItem.disabled = true
         }
         break
+      case '强制删除':
+        if (instanceDetail.value.status !== statusFail.value) {
+          newItem.disabled = true
+        }
+        break
     }
     instanceMenuItems.value.push(newItem)
   })
@@ -517,6 +523,20 @@ const instanceDelete = async (id) => {
   })
 }
 
+const instanceForceDelete = async (id) => {
+  toast.add({ severity: 'info', summary: '强制释放实例', detail: '正在强制释放实例', life: 3000 });
+  setTimeout(() => {
+    getInstances()
+  }, 100);
+  await api.AdminInstancesForceDelete(id, { force: true }).then(async (res) => {
+    toast.add({ severity: 'success', summary: '强制释放实例', detail: '实例已强制释放', life: 3000 });
+    await getInstances()
+  }).catch(err => {
+    console.error(err)
+    toast.add({ severity: 'error', summary: '强制释放实例失败', detail: err.response.data.msg, life: 3000 });
+  })
+}
+
 const openInstanceModify = async () => {
   instanceConfiguration.value.gpu_count = instanceDetail.value.gpu_count
   instanceConfiguration.value.volume_size = instanceDetail.value.volume_size
@@ -590,6 +610,27 @@ const openInstanceDelete = () => {
     },
     accept: async () => {
       await instanceDelete(instanceDetail.value.id)
+    },
+    reject: () => { }
+  });
+}
+
+const openInstanceForceDelete = () => {
+  confirm.require({
+    header: '确认强制删除 实例ID: ' + instanceDetail.value.id,
+    message: '强制实例删除后，数据将无法恢复，请确认删除',
+    icon: 'pi pi-info-circle',
+    rejectProps: {
+      label: '取消',
+      severity: 'secondary',
+      outlined: true
+    },
+    acceptProps: {
+      label: '强制删除',
+      severity: 'danger'
+    },
+    accept: async () => {
+      await instanceForceDelete(instanceDetail.value.id)
     },
     reject: () => { }
   });

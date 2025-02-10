@@ -21,6 +21,7 @@ type Data struct {
 	VolumeSize *int `json:"volume_size,omitempty"`
 
 	Action instanceController.Action `json:"action,omitempty"`
+	Force  bool                      `json:"force,omitempty"`
 }
 
 type Type int
