@@ -61,7 +61,7 @@ func control(serverID uint, data Data) (err error) {
 			if err != nil {
 				ctx := context.Background()
 				redis.RawDB.IncrBy(ctx, "remain_gpu:server:"+strconv.Itoa(int(serverID)), int64(instance.GpuCount))
-				database.DB.Model(&instance).Update("status", models.InstanceStatusFail).Update("from_action", models.InstanceActionRestart)
+				database.DB.Model(&instance).Update("status", models.InstanceStatusFail).Update("from_action", models.InstanceActionStart)
 				lc.Error("instance restart error: %v", err)
 				return
 			}
