@@ -48,6 +48,7 @@ func createInstance(ip string, port int, apikey string,
 		},
 		Env: []string{
 			"NVIDIA_DRIVER_CAPABILITIES=video,compute,utility",
+			"NVIDIA_VISIBLE_DEVICES=none",
 		},
 	}
 
