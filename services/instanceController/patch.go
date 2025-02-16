@@ -87,10 +87,6 @@ func Patch(instance *models.Instances, gpuCount, volumeSize int, cpuOnly bool) (
 
 		err = SetRootPassword(server.IP, server.Port, server.Apikey, instance.ContainerName, instance.SshPasswd)
 		if err != nil {
-			deleteInstance(server.IP, server.Port, server.Apikey, instance.ContainerName)
-			if instance.VolumeName != "" {
-				deleteVolume(server.IP, server.Port, server.Apikey, instance.VolumeName, false)
-			}
 			l.Error("set root password error: %v", err)
 			return err
 		}
@@ -135,10 +131,6 @@ func Patch(instance *models.Instances, gpuCount, volumeSize int, cpuOnly bool) (
 
 	err = SetRootPassword(server.IP, server.Port, server.Apikey, instance.ContainerName, instance.SshPasswd)
 	if err != nil {
-		deleteInstance(server.IP, server.Port, server.Apikey, instance.ContainerName)
-		if instance.VolumeName != "" {
-			deleteVolume(server.IP, server.Port, server.Apikey, instance.VolumeName, false)
-		}
 		l.Error("set root password error: %v", err)
 		return err
 	}
