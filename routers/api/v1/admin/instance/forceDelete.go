@@ -38,6 +38,8 @@ func forceDeleteHandler(ctx iris.Context) {
 
 	if instance.FromAction == models.InstanceActionStop || instance.FromAction == models.InstanceActionPause || instance.FromAction == models.InstanceActionRestart {
 		redis.RawDB.IncrBy(ctx, "remain_gpu:server:"+strconv.Itoa(int(instance.ServerID)), int64(instance.GpuCount))
+	}
+	if instance.FromAction != models.InstanceActionCreate {
 		redis.RawDB.IncrBy(ctx, "remain_volume:server:"+strconv.Itoa(int(instance.ServerID)), int64(instance.VolumeSize+30))
 	}
 
