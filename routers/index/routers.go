@@ -5,6 +5,7 @@ import (
 )
 
 func InitIndex(app *iris.Application) {
+	app.Use(cors)
 	app.HandleDir("/", GetWebFS(), iris.DirOptions{
 		IndexName: "/index.html",
 		Compress:  true,
