@@ -7,6 +7,8 @@ import (
 	"megrez/services/database"
 )
 
+const imagesKey = "images"
+
 func systemInit() (err error) {
 	l.SetFunction("systemInit")
 
@@ -32,6 +34,16 @@ func systemInit() (err error) {
 	result = database.DB.Save(&user)
 	if result.Error != nil {
 		l.Error("Save admin user failed, Error: %v", result.Error)
+		return
+	}
+
+	st := models.System{
+		Key:   imagesKey,
+		Value: "{}",
+	}
+	result = database.DB.Create(&st)
+	if result.Error != nil {
+		l.Error("Create system failed, Error: %v", result.Error)
 		return
 	}
 
