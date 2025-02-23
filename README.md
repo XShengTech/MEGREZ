@@ -38,7 +38,7 @@
 
 ✅ 资源性能监控看板
 
-✅ Jupter Notebook 支持
+✅ Jupyter Notebook 支持
 
 
 ## 📝 安装 & 使用教程
@@ -79,9 +79,9 @@
 
 ### 内置功能
 
-| VSCode 网页版                                        | Jupter Notebook                                 | Grafana 资源监控                 |
+| VSCode 网页版                                        | Jupyter Notebook                                 | Grafana 资源监控                 |
 | ---------------------------------------------------- | ----------------------------------------------- | -------------------------------- |
-| ![image-20250116010708107](./assets/code-server.png) | ![Jupter NoteBook](./assets/juper-notebook.png) | ![Grafana](./assets/grafana.png) |
+| ![image-20250116010708107](./assets/code-server/.png) | ![Jupyter NoteBook](./assets/juper-notebook.png) | ![Grafana](./assets/grafana.png) |
 
 ### 系统管理
 
