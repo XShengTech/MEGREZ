@@ -70,8 +70,8 @@
               :href="'http://' + data.code_server_address" target="_blank" v-tooltip.top="'VSCode Web'" />
             <Button v-else icon="pi pi-code" aria-label="Filter" v-tooltip.top="'VSCode Web'" disabled />
             <Button v-if="data.status == statusRunning" severity="info" icon="pi pi-inbox" aria-label="Filter" as="a"
-              :href="'http://' + data.jupyter_address + '/lab'" target="_blank" v-tooltip.top="'Jupter Lab'" />
-            <Button v-else severity="info" icon="pi pi-inbox" aria-label="Filter" v-tooltip.top="'Jupter Lab'"
+              :href="'http://' + data.jupyter_address + '/lab'" target="_blank" v-tooltip.top="'Jupyter Lab'" />
+            <Button v-else severity="info" icon="pi pi-inbox" aria-label="Filter" v-tooltip.top="'Jupyter Lab'"
               disabled />
             <Button v-if="data.status == statusRunning" severity="contrast" icon="pi pi-chart-bar" as="a"
               :href="'http://' + data.grafana_address + '/public-dashboards/2c510f203876465ba76617510ce3e219'"
@@ -122,13 +122,13 @@
         </Fieldset>
         <Fieldset legend="GPU">
           <span v-if="instanceDetail.gpu_count !== 0">{{ instanceDetail.gpu_type }} * {{ instanceDetail.gpu_count
-            }}</span>
+          }}</span>
           <span v-else>无卡模式</span>
         </Fieldset>
         <div class="flex flex-col md:flex-row gap-4">
           <Fieldset class="flex flex-wrap gap-2 w-full" legend="CPU">
             <span v-if="instanceDetail.gpu_count !== 0">{{ instanceDetail.cpu_count_per_gpu * instanceDetail.gpu_count
-              }}
+            }}
               核</span>
             <span v-else>1 核</span>
           </Fieldset>

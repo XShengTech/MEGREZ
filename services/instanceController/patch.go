@@ -92,7 +92,7 @@ func Patch(instance *models.Instances, gpuCount, volumeSize int, cpuOnly bool) (
 		}
 
 		go func() {
-			SetJupterPassword(server.IP, server.Port, server.Apikey, instance.ContainerName, instance.SshPasswd)
+			SetJupyterPassword(server.IP, server.Port, server.Apikey, instance.ContainerName, instance.SshPasswd)
 			SetCodeServerPassword(server.IP, server.Port, server.Apikey, instance.ContainerName, instance.SshPasswd)
 		}()
 
@@ -136,7 +136,7 @@ func Patch(instance *models.Instances, gpuCount, volumeSize int, cpuOnly bool) (
 	}
 
 	go func() {
-		SetJupterPassword(server.IP, server.Port, server.Apikey, instance.ContainerName, instance.SshPasswd)
+		SetJupyterPassword(server.IP, server.Port, server.Apikey, instance.ContainerName, instance.SshPasswd)
 		SetCodeServerPassword(server.IP, server.Port, server.Apikey, instance.ContainerName, instance.SshPasswd)
 	}()
 

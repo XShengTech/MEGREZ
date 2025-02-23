@@ -48,7 +48,7 @@ func Create(instance *models.Instances) (containerName, volumeName string, err e
 	}
 
 	go func() {
-		SetJupterPassword(server.IP, server.Port, server.Apikey, containerName, instance.SshPasswd)
+		SetJupyterPassword(server.IP, server.Port, server.Apikey, containerName, instance.SshPasswd)
 		SetCodeServerPassword(server.IP, server.Port, server.Apikey, containerName, instance.SshPasswd)
 	}()
 

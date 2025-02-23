@@ -45,7 +45,7 @@ func Restart(instance *models.Instances) (err error) {
 	}
 
 	go func() {
-		SetJupterPassword(server.IP, server.Port, server.Apikey, instance.ContainerName, instance.SshPasswd)
+		SetJupyterPassword(server.IP, server.Port, server.Apikey, instance.ContainerName, instance.SshPasswd)
 		SetCodeServerPassword(server.IP, server.Port, server.Apikey, instance.ContainerName, instance.SshPasswd)
 	}()
 

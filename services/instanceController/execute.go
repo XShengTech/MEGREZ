@@ -57,9 +57,9 @@ func SetRootPassword(ip string, port int, apikey string,
 	return nil
 }
 
-func SetJupterPassword(ip string, port int, apikey string,
+func SetJupyterPassword(ip string, port int, apikey string,
 	containerName, password string) (err error) {
-	l.SetFunction("SetJupterPassword")
+	l.SetFunction("SetJupyterPassword")
 
 	// Set Jupyter Password
 	data := executeReq{
@@ -85,8 +85,8 @@ func SetJupterPassword(ip string, port int, apikey string,
 	c.Do()
 
 	if c.GetStatusCode() != 200 {
-		l.Error("set jupter password error: %d", c.GetStatusCode())
-		return errors.New("set jupter password request error")
+		l.Error("set jupyter password error: %d", c.GetStatusCode())
+		return errors.New("set jupyter password request error")
 	}
 
 	var res resStruct
@@ -97,7 +97,7 @@ func SetJupterPassword(ip string, port int, apikey string,
 	}
 
 	if res.Code != 200 {
-		l.Error("set jupter password code: %d, error: %s", res.Code, res.Msg)
+		l.Error("set jupyter password code: %d, error: %s", res.Code, res.Msg)
 		return errors.New(res.Msg)
 	}
 
@@ -124,8 +124,8 @@ func SetJupterPassword(ip string, port int, apikey string,
 	c.Do()
 
 	if c.GetStatusCode() != 200 {
-		l.Error("restart jupter error: %d", c.GetStatusCode())
-		return errors.New("restart jupter request error")
+		l.Error("restart jupyter error: %d", c.GetStatusCode())
+		return errors.New("restart jupyter request error")
 	}
 
 	err = json.Unmarshal(c.GetBody(), &res)
@@ -135,7 +135,7 @@ func SetJupterPassword(ip string, port int, apikey string,
 	}
 
 	if res.Code != 200 {
-		l.Error("restart jupter code: %d, error: %s", res.Code, res.Msg)
+		l.Error("restart jupyter code: %d, error: %s", res.Code, res.Msg)
 		return errors.New(res.Msg)
 	}
 
