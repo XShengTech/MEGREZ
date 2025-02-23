@@ -40,10 +40,8 @@ func createInstance(ip string, port int, apikey string,
 		Memory:         strconv.Itoa(memorySize) + "GB",
 		ContainerPorts: []string{
 			"22",    // SSH
+			"80",    // Nginx
 			"6007",  // TensorBoard
-			"8888",  // Jupyter Notebook
-			"3000",  // Grafana
-			"8080",  // Code-Server
 			"34567", // Custom Port
 		},
 		Env: []string{

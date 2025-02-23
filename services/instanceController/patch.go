@@ -104,8 +104,9 @@ func Patch(instance *models.Instances, gpuCount, volumeSize int, cpuOnly bool) (
 
 		instance.SshAddress = server.IP + ":" + portBindings["22"]
 		instance.TensorBoardAddress = server.IP + ":" + portBindings["6007"]
-		instance.JupyterAddress = server.IP + ":" + portBindings["8888"]
-		instance.GrafanaAddress = server.IP + ":" + portBindings["3000"]
+		instance.JupyterAddress = server.IP + ":" + portBindings["80"] + "/jupyter"
+		instance.GrafanaAddress = server.IP + ":" + portBindings["80"] + "/monitor/public-dashboards/2c510f203876465ba76617510ce3e219"
+		instance.CodeServerAddress = server.IP + ":" + portBindings["80"] + "/code-server/"
 
 		instance.CpuOnly = true
 		instance.GpuCount = 0
@@ -148,9 +149,9 @@ func Patch(instance *models.Instances, gpuCount, volumeSize int, cpuOnly bool) (
 
 	instance.SshAddress = server.IP + ":" + portBindings["22"]
 	instance.TensorBoardAddress = server.IP + ":" + portBindings["6007"]
-	instance.JupyterAddress = server.IP + ":" + portBindings["8888"]
-	instance.GrafanaAddress = server.IP + ":" + portBindings["3000"]
-	instance.CodeServerAddress = server.IP + ":" + portBindings["8080"]
+	instance.JupyterAddress = server.IP + ":" + portBindings["80"] + "/jupyter"
+	instance.GrafanaAddress = server.IP + ":" + portBindings["80"] + "/monitor/public-dashboards/2c510f203876465ba76617510ce3e219"
+	instance.CodeServerAddress = server.IP + ":" + portBindings["80"] + "/code-server/"
 
 	instance.CpuOnly = false
 	instance.GpuCount = gpuCount

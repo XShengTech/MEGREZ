@@ -70,12 +70,11 @@
               :href="'http://' + data.code_server_address" target="_blank" v-tooltip.top="'VSCode Web'" />
             <Button v-else icon="pi pi-code" aria-label="Filter" v-tooltip.top="'VSCode Web'" disabled />
             <Button v-if="data.status == statusRunning" severity="info" icon="pi pi-inbox" aria-label="Filter" as="a"
-              :href="'http://' + data.jupyter_address + '/lab'" target="_blank" v-tooltip.top="'Jupyter Lab'" />
+              :href="'http://' + data.jupyter_address" target="_blank" v-tooltip.top="'Jupyter Lab'" />
             <Button v-else severity="info" icon="pi pi-inbox" aria-label="Filter" v-tooltip.top="'Jupyter Lab'"
               disabled />
             <Button v-if="data.status == statusRunning" severity="contrast" icon="pi pi-chart-bar" as="a"
-              :href="'http://' + data.grafana_address + '/public-dashboards/2c510f203876465ba76617510ce3e219'"
-              target="_blank" v-tooltip.top="'监控'" />
+              :href="'http://' + data.grafana_address" target="_blank" v-tooltip.top="'监控'" />
             <Button v-else severity="contrast" icon="pi pi-chart-bar" v-tooltip.top="'监控'" disabled />
             <Button v-if="!isAdmin" icon="pi pi-ellipsis-h" severity="secondary" aria-label="Bookmark"
               @click="showMenu($event, data)" />

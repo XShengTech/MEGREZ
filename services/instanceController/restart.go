@@ -57,9 +57,9 @@ func Restart(instance *models.Instances) (err error) {
 
 	instance.SshAddress = server.IP + ":" + portBindings["22"]
 	instance.TensorBoardAddress = server.IP + ":" + portBindings["6007"]
-	instance.JupyterAddress = server.IP + ":" + portBindings["8888"]
-	instance.GrafanaAddress = server.IP + ":" + portBindings["3000"]
-	instance.CodeServerAddress = server.IP + ":" + portBindings["8080"]
+	instance.JupyterAddress = server.IP + ":" + portBindings["80"] + "/jupyter"
+	instance.GrafanaAddress = server.IP + ":" + portBindings["80"] + "/monitor/public-dashboards/2c510f203876465ba76617510ce3e219"
+	instance.CodeServerAddress = server.IP + ":" + portBindings["80"] + "/code-server/"
 
 	instance.Status = models.InstanceStatusRunning
 	result = database.DB.Save(&instance)
