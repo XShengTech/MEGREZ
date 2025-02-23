@@ -49,8 +49,11 @@
 > 查看文档 [**>>> 🚧 正在施工中 <<<**]()
 
 
-
 ## 📌 效果展示
+
+### 视频演示
+
+[Bilibili - MEGREZ——你的新一代开源GPU管理系统](https://www.bilibili.com/video/BV1EnfWY9ECC/)
 
 ### 登录注册
 
