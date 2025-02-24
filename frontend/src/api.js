@@ -35,6 +35,9 @@ export default {
   UserRegister(data) {
     return ajax('user/register', 'post', { data })
   },
+  UserResetPassword(data) {
+    return ajax('user/reset-password', 'post', { data })
+  },
   UserVerifyRequest() {
     return ajax(`user/verify`, 'post', {})
   },

@@ -7,7 +7,7 @@
           <div class="font-semibold text-xl">邮箱验证</div>
           <div class="flex flex-col gap-2">
             <label for="email">邮箱</label>
-            <InputText v-model="userProfile.email" id="email" type="text" disabled />
+            <InputText v-model="userProfile.email" type="text" disabled />
           </div>
           <div class="mt-2">
             <Button v-if="!userProfile.verify && !verifyRequesting" label="验证" severity="warn"
@@ -22,8 +22,8 @@
           <div class="font-semibold text-xl">修改邮箱</div>
           <div class="flex flex-col gap-2">
             <label for="email">邮箱</label>
-            <InputText v-if="!emailModifyStatus" v-model="userProfile.email" id="email" type="text" disabled />
-            <InputText v-else v-model="emailModifyValue" id="email" type="text" />
+            <InputText v-if="!emailModifyStatus" v-model="userProfile.email" type="text" disabled />
+            <InputText v-else v-model="emailModifyValue" type="text" />
           </div>
           <div v-if="!emailModifyStatus" class="mt-2">
             <Button label="修改" style="width: 5.6rem; float: right;" @click="emailModifyStatus = true" />
@@ -41,18 +41,20 @@
           <div class="font-semibold text-xl">修改密码</div>
           <div class="flex flex-col gap-2">
             <label for="old_password">原密码</label>
-            <InputText id="old_password" type="text" />
+            <Password v-model="resetPasswordData.old_password" :toggleMask="true" :feedback="false" />
           </div>
           <div class="flex flex-col gap-2">
             <label for="new_password">新密码</label>
-            <InputText id="new_password" type="text" />
+            <Password v-model="resetPasswordData.new_password" :toggleMask="true" :feedback="false" />
           </div>
           <div class="flex flex-col gap-2">
             <label for="re_password">重复密码</label>
-            <InputText id="re_password" type="text" />
+            <Password v-model="resetPasswordData.re_password" :toggleMask="true" :feedback="false" />
           </div>
           <div class="mt-2">
-            <Button label="保存" style="width: 5.6rem; float: right;" />
+            <Button v-if="!resetPasswordRequesting" label="保存" style="width: 5.6rem; float: right;"
+              @click="resetPassword" />
+            <Button v-else label="保存中" icon="pi pi-spin pi-spinner" disabled style="width: 7.2rem; float: right;" />
           </div>
         </div>
       </div>
@@ -75,6 +77,13 @@ const verifyRequesting = ref(false)
 const emailModifyStatus = ref(false)
 const emailModifyValue = ref('')
 
+const resetPasswordRequesting = ref(false)
+const resetPasswordData = ref({
+  old_password: '',
+  new_password: '',
+  re_password: ''
+})
+
 const getProfile = () => {
   api.GetUserProfile().then((res) => {
     userProfile.value = res.data.data.result
@@ -94,6 +103,43 @@ const emailVerify = () => {
   }).catch((err) => {
     toast.add({ severity: 'error', summary: '发送失败', detail: err.response.data.msg, life: 3000 })
     verifyRequesting.value = false
+    console.error(err)
+  })
+}
+
+const resetPassword = () => {
+  resetPasswordRequesting.value = true
+
+  if (resetPasswordData.value.old_password == "") {
+    toast.add({ severity: 'error', summary: '原密码不能为空', detail: '请重新输入', life: 3000 })
+    resetPasswordRequesting.value = false
+    return
+  }
+
+  if (resetPasswordData.value.new_password == "") {
+    toast.add({ severity: 'error', summary: '新密码不能为空', detail: '请重新输入', life: 3000 })
+    resetPasswordRequesting.value = false
+    return
+  }
+
+  if (resetPasswordData.value.re_password == "") {
+    toast.add({ severity: 'error', summary: '重复密码不能为空', detail: '请重新输入', life: 3000 })
+    resetPasswordRequesting.value = false
+    return
+  }
+
+  if (resetPasswordData.value.new_password != resetPasswordData.value.re_password) {
+    toast.add({ severity: 'error', summary: '两次密码不一致', detail: '请重新输入', life: 3000 })
+    resetPasswordRequesting.value = false
+    return
+  }
+
+  api.UserResetPassword(resetPasswordData.value).then((res) => {
+    toast.add({ severity: 'success', summary: '修改成功', detail: '请重新登录', life: 3000 })
+    resetPasswordRequesting.value = false
+  }).catch((err) => {
+    toast.add({ severity: 'error', summary: '修改失败', detail: err.response.data.msg, life: 3000 })
+    resetPasswordRequesting.value = false
     console.error(err)
   })
 }
