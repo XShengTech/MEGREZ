@@ -27,7 +27,7 @@
               <span class="font-medium no-underline ml-2 text-right cursor-pointer text-slate-600">记起密码？<span
                   class="text-primary" @click="handleLogin">立即登入</span></span>
             </div>
-            <Button label="注册" class="w-full" @click="handleSubmit"></Button>
+            <Button label="重置密码" class="w-full" @click="handleSubmit"></Button>
           </div>
         </div>
       </div>
