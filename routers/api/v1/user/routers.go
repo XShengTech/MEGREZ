@@ -25,6 +25,7 @@ func InitUser(party router.Party) {
 	party.Post("/register", registerHandler)
 	party.Get("/profile", middleware.AuthCheck, profileHandler)
 	party.Post("/password", middleware.AuthCheck, resetPasswordHandler)
+	party.Post("/email", middleware.AuthCheck, resetEmailHandler)
 	party.Get("/verify/{code:string}", verifyHandler)
 	party.Post("/verify", middleware.AuthCheck, verifySendHandler)
 

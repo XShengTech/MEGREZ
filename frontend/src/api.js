@@ -38,6 +38,9 @@ export default {
   UserResetPassword(data) {
     return ajax('user/password', 'post', { data })
   },
+  UserResetEmail(data) {
+    return ajax('user/email', 'post', { data })
+  },
   UserVerifyRequest() {
     return ajax(`user/verify`, 'post', {})
   },

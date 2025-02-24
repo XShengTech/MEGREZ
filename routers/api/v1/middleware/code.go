@@ -14,6 +14,11 @@ const (
 	CodeUserNotExist         ResCode = 1002
 	CodeRegisterRequestError ResCode = 1003
 	CodeRegisterError        ResCode = 1004
+	CodeEmailFormatError     ResCode = 1005
+	CodeUserAlreadyVerified  ResCode = 1006
+	CodeUserVerifyInvalid    ResCode = 1007
+	CodePasswordNotMatch     ResCode = 1008
+
 	CodeInternalCreateError  ResCode = 1010
 	CodeInstanceDeleteError  ResCode = 1011
 	CodeInstanceQueryError   ResCode = 1012
@@ -42,10 +47,6 @@ const (
 	CodeAdminUserDeleteError     ResCode = 2013
 	CodeAdminUserInstanceNoEmpty ResCode = 2014
 	CodeAdminUserModifyError     ResCode = 2015
-
-	CodeUserAlreadyVerified ResCode = 3001
-	CodeUserVerifyInvalid   ResCode = 3002
-	CodePasswordNotMatch    ResCode = 3003
 )
 
 var codeMsgMap = map[ResCode]string{
@@ -60,6 +61,11 @@ var codeMsgMap = map[ResCode]string{
 	CodeUserNotExist:         "user not exist",
 	CodeRegisterRequestError: "register request error",
 	CodeRegisterError:        "username or email exist",
+	CodeEmailFormatError:     "email format error",
+	CodeUserAlreadyVerified:  "user already verified",
+	CodeUserVerifyInvalid:    "email verify error",
+	CodePasswordNotMatch:     "password not match",
+
 	CodeInternalCreateError:  "create error",
 	CodeInstanceDeleteError:  "delete instance error",
 	CodeInstanceStatusError:  "instance status error",
@@ -88,8 +94,4 @@ var codeMsgMap = map[ResCode]string{
 	CodeAdminUserDeleteError:     "delete user error",
 	CodeAdminUserModifyError:     "modify user error",
 	CodeAdminUserInstanceNoEmpty: "user instances not empty",
-
-	CodeUserAlreadyVerified: "user already verified",
-	CodeUserVerifyInvalid:   "email verify error",
-	CodePasswordNotMatch:    "password not match",
 }

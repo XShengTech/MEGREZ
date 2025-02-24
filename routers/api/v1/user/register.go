@@ -1,6 +1,7 @@
 package user
 
 import (
+	"megrez/libs/utils"
 	"megrez/models"
 	"megrez/routers/api/v1/middleware"
 	"megrez/services/config"
@@ -26,6 +27,11 @@ func registerHandler(ctx iris.Context) {
 
 	if userReq.Username == "" || userReq.Email == "" || userReq.Password == "" {
 		middleware.Error(ctx, middleware.CodeRegisterRequestError, iris.StatusBadRequest)
+		return
+	}
+
+	if !utils.EmailFormat(userReq.Email) {
+		middleware.Error(ctx, middleware.CodeEmailFormatError, iris.StatusBadRequest)
 		return
 	}
 

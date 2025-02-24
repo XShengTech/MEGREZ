@@ -1,6 +1,7 @@
 package users
 
 import (
+	"megrez/libs/utils"
 	"megrez/models"
 	"megrez/routers/api/v1/middleware"
 	"megrez/services/database"
@@ -9,6 +10,7 @@ import (
 )
 
 type modifyReqStruct struct {
+	Email    *string `json:"email"`
 	Password *string `json:"password"`
 	Role     *int    `json:"role"`
 	Verify   *bool   `json:"verify"`
@@ -44,6 +46,12 @@ func modifyHandler(ctx iris.Context) {
 	if result.Error != nil {
 		middleware.Error(ctx, middleware.CodeServeBusy, iris.StatusInternalServerError)
 		return
+	}
+
+	if req.Email != nil {
+		if *req.Email != "" && utils.EmailFormat(*req.Email) {
+			user.Email = *req.Email
+		}
 	}
 
 	if req.Password != nil {
