@@ -20,7 +20,8 @@
               <span class="font-medium no-underline ml-2 text-right cursor-pointer text-slate-600">记起密码？<span
                   class="text-primary" @click="handleLogin">立即登入</span></span>
             </div>
-            <Button label="发送邮件" class="w-full" @click="handleSubmit"></Button>
+            <Button v-if="!requesting" label="发送邮件" class="w-full" @click="handleSubmit"></Button>
+            <Button v-else label="发送中" icon="pi pi-spin pi-spinner" disabled class="w-full"></Button>
           </div>
         </div>
       </div>
@@ -40,16 +41,20 @@ import { useRouter } from 'vue-router';
 const router = useRouter()
 const toast = useToast()
 
+const requesting = ref(false)
 const form = ref({
   email: ''
 })
 
 const handleSubmit = () => {
+  requesting.value = true
   api.UserForgetRequest(form.value).then(res => {
     toast.add({ severity: 'success', summary: '发送成功', detail: '请查看邮箱', life: 3000 })
+    requesting.value = false
   }).catch(err => {
     console.error(err)
     toast.add({ severity: 'error', summary: '发送失败', detail: '请检查后重新尝试', life: 3000 })
+    requesting.value = false
   })
 }
 
