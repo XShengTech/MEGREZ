@@ -48,6 +48,11 @@ func resetEmailHandler(ctx iris.Context) {
 		return
 	}
 
+	if req.Email == user.Email {
+		middleware.Error(ctx, middleware.CodeEmailSameError, iris.StatusBadRequest)
+		return
+	}
+
 	result = database.DB.Model(&user).Update("email", req.Email).Update("verify", false)
 	if result.Error != nil {
 		l.Error("save user error: %v", result.Error)

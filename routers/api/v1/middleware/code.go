@@ -18,6 +18,7 @@ const (
 	CodeUserAlreadyVerified  ResCode = 1006
 	CodeUserVerifyInvalid    ResCode = 1007
 	CodePasswordNotMatch     ResCode = 1008
+	CodeEmailSameError       ResCode = 1009
 
 	CodeInternalCreateError  ResCode = 1010
 	CodeInstanceDeleteError  ResCode = 1011
@@ -65,6 +66,7 @@ var codeMsgMap = map[ResCode]string{
 	CodeUserAlreadyVerified:  "user already verified",
 	CodeUserVerifyInvalid:    "email verify error",
 	CodePasswordNotMatch:     "password not match",
+	CodeEmailSameError:       "email same error",
 
 	CodeInternalCreateError:  "create error",
 	CodeInstanceDeleteError:  "delete instance error",
