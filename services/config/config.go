@@ -9,6 +9,7 @@ type configStruct struct {
 	Http     httpStruct     `yaml:"http,omitempty"`
 	Database databaseStruct `yaml:"database,omitempty"`
 	Redis    redisStruct    `yaml:"redis,omitempty"`
+	Smtp     smtpStruct     `yaml:"smtp,omitempty"`
 	Log      logStruct      `yaml:"log,omitempty"`
 	System   systemStruct   `yaml:"system,omitempty"`
 }
@@ -35,12 +36,21 @@ type redisStruct struct {
 	SentinelPassword string `yaml:"sentinel_password,omitempty"`
 }
 
+type smtpStruct struct {
+	Host     string `yaml:"host,omitempty"`
+	Port     int    `yaml:"port,omitempty"`
+	Password string `yaml:"password,omitempty"`
+	User     string `yaml:"user,omitempty"`
+	SSL      bool   `yaml:"ssl,omitempty"`
+}
+
 type logStruct struct {
 	Level string `yaml:"level,omitempty"`
 	File  string `yaml:"file,omitempty"`
 }
 
 type systemStruct struct {
+	BaseUrl  string `yaml:"base_url,omitempty"`
 	Salt     string `yaml:"salt,omitempty"`
 	Verify   bool   `yaml:"verify,omitempty"`
 	MountDir string `yaml:"mount_dir,omitempty"`
@@ -64,6 +74,7 @@ var config = configStruct{
 		Password: "GpuManager",
 		Database: 0,
 	},
+	Smtp: smtpStruct{},
 	Log: logStruct{
 		Level: "DEBUG",
 		File:  "data/logs/backend.log",

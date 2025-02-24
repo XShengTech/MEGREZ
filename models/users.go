@@ -16,7 +16,8 @@ type Users struct {
 	Password string `json:"password,omitempty" gorm:"type:varchar(255);not null"`
 	Role     int    `json:"role" gorm:"not null,default:0"`
 
-	Email string `json:"email" gorm:"type:varchar(255);uniqueIndex;unique;not null"`
+	Email  string `json:"email" gorm:"type:varchar(255);uniqueIndex;unique;not null"`
+	Verify bool   `json:"verify" gorm:"not null,default:false"`
 
 	Balance float64 `json:"balance" gorm:"not null"`
 

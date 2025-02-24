@@ -42,6 +42,10 @@ const (
 	CodeAdminUserDeleteError     ResCode = 2013
 	CodeAdminUserInstanceNoEmpty ResCode = 2014
 	CodeAdminUserModifyError     ResCode = 2015
+
+	CodeUserAlreadyVerified ResCode = 3001
+	CodeUserVerifyInvalid   ResCode = 3002
+	CodePasswordNotMatch    ResCode = 3003
 )
 
 var codeMsgMap = map[ResCode]string{
@@ -84,4 +88,8 @@ var codeMsgMap = map[ResCode]string{
 	CodeAdminUserDeleteError:     "delete user error",
 	CodeAdminUserModifyError:     "modify user error",
 	CodeAdminUserInstanceNoEmpty: "user instances not empty",
+
+	CodeUserAlreadyVerified: "user already verified",
+	CodeUserVerifyInvalid:   "email verify error",
+	CodePasswordNotMatch:    "password not match",
 }

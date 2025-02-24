@@ -14,6 +14,7 @@ type profile struct {
 	Email    string  `json:"email"`
 	Role     int     `json:"role"`
 	Balance  float64 `json:"balance"`
+	Verify   bool    `json:"verify"`
 }
 
 func profileHandler(ctx iris.Context) {
@@ -40,6 +41,7 @@ func profileHandler(ctx iris.Context) {
 		Email:    user.Email,
 		Role:     user.Role,
 		Balance:  user.Balance,
+		Verify:   user.Verify,
 	}
 
 	middleware.Result(ctx, profile)

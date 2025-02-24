@@ -2,6 +2,7 @@ package config
 
 import (
 	"os"
+	"strconv"
 
 	"gopkg.in/yaml.v3"
 )
@@ -19,6 +20,10 @@ func InitConfig(path string) {
 		l.Fatal("Failed to unmarshal config file", err)
 	}
 	l.SetLevel(config.GetLogLevel())
+
+	if config.System.BaseUrl == "" {
+		config.System.BaseUrl = "http://" + config.Http.Host + ":" + strconv.Itoa(config.Http.Port)
+	}
 }
 
 func GetDatabase() databaseStruct {
@@ -33,12 +38,20 @@ func GetRedis() redisStruct {
 	return config.GetRedis()
 }
 
+func GetSmtp() smtpStruct {
+	return config.GetSmtp()
+}
+
 func GetLogLevel() string {
 	return config.GetLogLevel()
 }
 
 func GetLogFile() string {
 	return config.GetLogFile()
+}
+
+func GetSystemBaseUrl() string {
+	return config.GetSystemBaseUrl()
 }
 
 func GetSystemSalt() string {

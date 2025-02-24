@@ -20,7 +20,7 @@ func detailHandler(ctx iris.Context) {
 	user := models.Users{
 		ID: id,
 	}
-	result := database.DB.Select("id", "username", "email", "role", "balance", "created_at").First(&user)
+	result := database.DB.Select("id", "username", "email", "role", "verify", "balance", "created_at").First(&user)
 	if result.Error != nil {
 		l.Error("detail user error: %v", result.Error)
 		middleware.Error(ctx, middleware.CodeAdminUserDetailError, iris.StatusInternalServerError)

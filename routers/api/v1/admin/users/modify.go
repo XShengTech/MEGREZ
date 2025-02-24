@@ -11,6 +11,7 @@ import (
 type modifyReqStruct struct {
 	Password *string `json:"password"`
 	Role     *int    `json:"role"`
+	Verify   *bool   `json:"verify"`
 }
 
 func modifyHandler(ctx iris.Context) {
@@ -53,6 +54,10 @@ func modifyHandler(ctx iris.Context) {
 
 	if req.Role != nil {
 		user.Role = *req.Role
+	}
+
+	if req.Verify != nil {
+		user.Verify = *req.Verify
 	}
 
 	result = database.DB.Save(&user)

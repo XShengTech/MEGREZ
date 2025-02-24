@@ -25,6 +25,8 @@ func InitUser(party router.Party) {
 	party.Post("/register", registerHandler)
 	party.Get("/profile", middleware.AuthCheck, profileHandler)
 	party.Post("/resetPassword", middleware.AuthCheck, resetPasswordHandler)
+	party.Get("/verify/{code:string}", verifyHandler)
+	party.Post("/verify", middleware.AuthCheck, verifySendHandler)
 
 	servers.InitServers(party.Party("/servers"))
 	instances.InitInstances(party.Party("/instances"))

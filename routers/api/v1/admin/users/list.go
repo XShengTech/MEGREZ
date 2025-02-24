@@ -42,7 +42,7 @@ func listHandler(ctx iris.Context) {
 		return
 	}
 
-	result := database.DB.Limit(limit).Offset(offset).Select("id", "username", "email", "role", "balance", "created_at").Order("id").Find(&users)
+	result := database.DB.Limit(limit).Offset(offset).Select("id", "username", "email", "role", "verify", "balance", "created_at").Order("id").Find(&users)
 	if result.Error != nil {
 		l.Error("list users error: %v", result.Error)
 		middleware.Error(ctx, middleware.CodeAdminUserListError, iris.StatusInternalServerError)

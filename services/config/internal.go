@@ -20,12 +20,20 @@ func (c *configStruct) GetRedis() redisStruct {
 	return c.Redis
 }
 
+func (c *configStruct) GetSmtp() smtpStruct {
+	return c.Smtp
+}
+
 func (c *configStruct) GetLogLevel() string {
 	return c.Log.Level
 }
 
 func (c *configStruct) GetLogFile() string {
 	return c.Log.File
+}
+
+func (c *configStruct) GetSystemBaseUrl() string {
+	return c.System.BaseUrl
 }
 
 func (c *configStruct) GetSystemSalt() string {

@@ -35,6 +35,12 @@ export default {
   UserRegister(data) {
     return ajax('user/register', 'post', { data })
   },
+  UserVerifyRequest() {
+    return ajax(`user/verify`, 'post', {})
+  },
+  UserVerify(code) {
+    return ajax(`user/verify/${code}`, 'get', {})
+  },
 
   UserInstancesList(params) {
     return ajax('user/instances', 'get', { params })

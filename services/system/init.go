@@ -24,6 +24,7 @@ func systemInit() (err error) {
 		Username: "admin",
 		Email:    "admin@gpuManager.com",
 		Role:     3,
+		Verify:   true,
 	}
 	result := database.DB.Create(&user)
 	if result.Error != nil {

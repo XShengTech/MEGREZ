@@ -65,6 +65,7 @@ func loginHandler(ctx iris.Context) {
 		Email:    user.Email,
 		Role:     user.Role,
 		Balance:  user.Balance,
+		Verify:   user.Verify,
 	}
 
 	middleware.Result(ctx, profile)

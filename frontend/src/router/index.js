@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 import Login from '@/views/Login.vue';
 import Register from '@/views/Register.vue';
+import Verify from '@/views/Verify.vue';
 
 import InstanceCreate from '@/views/users/InstanceCreate.vue';
 import InstanceList from '@/views/users/InstanceList.vue';
@@ -31,6 +32,11 @@ const router = createRouter({
       path: '/register',
       name: 'register',
       component: Register
+    },
+    {
+      path: '/verify/:code',
+      name: 'verify',
+      component: Verify
     },
     {
       path: '/',
