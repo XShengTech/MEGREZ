@@ -14,10 +14,14 @@ import (
 	"github.com/kataras/iris/v12"
 )
 
-const verifyRedisKeyPrefix = "verify:user:"
-const verifyUrlPrefix = "/verify/"
-const verifyTitle = "邮箱验证"
-const verifyHTMLFormat = `
+type forgetSendStruct struct {
+	Email string `json:"email"`
+}
+
+const forgetPasswordRedisKeyPrefix = "forget:user:"
+const forgetPasswordUrlPrefix = "/reset/"
+const forgetPasswordTitle = "重置密码"
+const forgetPasswordHTMLFormat = `
 <div>
     <table cellpadding="0" align="center" style="overflow:hidden;background:#fff;margin:0 auto;text-align:left;position:relative;font-size:14px; font-family:'lucida Grande',Verdana;line-height:1.5;box-shadow:0 0 3px #ccc;border:1px solid #ccc;border-radius:5px;border-collapse:collapse;">
         <tbody>
@@ -30,7 +34,10 @@ const verifyHTMLFormat = `
                     <div style="padding:20px 35px 40px;">
                         <h2 style="font-weight:bold;margin-bottom:5px;font-size:14px;">Hello, %s:</h2>
                         <p style="margin-top:20px">
-                            请在15分钟内点击链接： <a href="%s">%s</a> &nbsp;进行邮箱验证操作，十五分钟后该链接将会失效.
+                            请在15分钟内点击链接： <a href="%s">%s</a> &nbsp;进行密码重置操作，十五分钟后该链接将会失效.
+                        </p>
+                        <p style="margin-top:20px">
+                            为了保护你的账户,请不要使用单一的密码来进行重置。
                         </p>
                         <p style="margin-top:20px">
                             如果您有任何问题，请联系系统管理员以获得更多信息与支持。
@@ -46,42 +53,40 @@ const verifyHTMLFormat = `
 </div>
 `
 
-func verifySendHandler(ctx iris.Context) {
-	l.SetFunction("verifySendHandler")
+func forgetSendHandler(ctx iris.Context) {
+	var req forgetSendStruct
+	if err := ctx.ReadJSON(&req); err != nil {
+		middleware.Error(ctx, middleware.CodeBadRequest, iris.StatusBadRequest)
+		return
+	}
 
-	userId, err := ctx.Values().GetInt("userId")
-	if err != nil {
+	if req.Email == "" {
 		middleware.Error(ctx, middleware.CodeBadRequest, iris.StatusBadRequest)
 		return
 	}
 
 	user := models.Users{
-		ID: uint(userId),
+		Email: req.Email,
 	}
-	result := database.DB.First(&user)
+	result := database.DB.Where(&user).First(&user)
 	if result.Error != nil {
 		l.Error("get user error: %v", result.Error)
 		middleware.Error(ctx, middleware.CodeUserNotExist, iris.StatusInternalServerError)
 		return
 	}
 
-	if user.Verify {
-		middleware.Error(ctx, middleware.CodeUserAlreadyVerified, iris.StatusBadRequest)
-		return
-	}
-
 	rdb := redis.RawDB
 
-	verifyUrl := crypto.Hex(32)
-	err = rdb.Set(ctx, verifyRedisKeyPrefix+verifyUrl, user.Email, 15*time.Minute).Err()
+	forgetUrl := crypto.Hex(32)
+	err := rdb.Set(ctx, forgetPasswordRedisKeyPrefix+forgetUrl, user.ID, 15*time.Minute).Err()
 	if err != nil {
 		middleware.Error(ctx, middleware.CodeServeBusy, iris.StatusInternalServerError)
-		l.Error("Set Redis Error: %v", err)
+		l.Error("Set Redis error: %v", err)
 		return
 	}
 
-	verifyUrl = config.GetSystemBaseUrl() + verifyUrlPrefix + verifyUrl
-	err = smtp.Send(user.Email, verifyTitle, fmt.Sprintf(verifyHTMLFormat, user.Username, verifyUrl, verifyUrl))
+	forgetUrl = config.GetSystemBaseUrl() + forgetPasswordUrlPrefix + forgetUrl
+	err = smtp.Send(user.Email, forgetPasswordTitle, fmt.Sprintf(forgetPasswordHTMLFormat, user.Username, forgetUrl, forgetUrl))
 	if err != nil {
 		middleware.Error(ctx, middleware.CodeServeBusy, iris.StatusInternalServerError)
 		l.Error("Send SMTP Error: %v", err)

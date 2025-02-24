@@ -25,7 +25,8 @@
             <div class="flex items-center justify-between mt-2 mb-8 gap-8">
               <span class="font-medium no-underline ml-2 text-right cursor-pointer text-slate-600">没有账号？<span
                   class="text-primary" @click="handleRegister">立即注册</span></span>
-              <span class="font-medium no-underline ml-2 text-right cursor-pointer text-primary">忘记密码</span>
+              <span class="font-medium no-underline ml-2 text-right cursor-pointer text-primary"
+                @click="handleForget">忘记密码</span>
             </div>
             <Button label="登入" class="w-full" @click="handleSubmit"></Button>
           </div>
@@ -68,6 +69,10 @@ const handleSubmit = () => {
 
 const handleRegister = () => {
   router.push('/register')
+}
+
+const handleForget = () => {
+  router.push('/forget')
 }
 </script>
 

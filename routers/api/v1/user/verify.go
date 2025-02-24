@@ -30,7 +30,6 @@ func verifyHandler(ctx iris.Context) {
 	}
 
 	email := v.Val()
-	l.Debug("verify email: %s", email)
 	user := models.Users{
 		Email: email,
 	}

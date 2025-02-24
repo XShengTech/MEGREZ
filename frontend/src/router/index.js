@@ -1,8 +1,10 @@
 import AppLayout from '@/layout/AppLayout.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 
+import Forget from '@/views/Forget.vue';
 import Login from '@/views/Login.vue';
 import Register from '@/views/Register.vue';
+import Reset from '@/views/Reset.vue';
 import Verify from '@/views/Verify.vue';
 
 import InstanceCreate from '@/views/users/InstanceCreate.vue';
@@ -32,6 +34,16 @@ const router = createRouter({
       path: '/register',
       name: 'register',
       component: Register
+    },
+    {
+      path: '/forget',
+      name: 'forget',
+      component: Forget
+    },
+    {
+      path: '/reset/:code',
+      name: 'forget-reset',
+      component: Reset
     },
     {
       path: '/verify/:code',

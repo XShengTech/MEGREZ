@@ -49,7 +49,7 @@ func modifyHandler(ctx iris.Context) {
 	}
 
 	if req.Email != nil {
-		if *req.Email != "" && utils.EmailFormat(*req.Email) {
+		if *req.Email != "" && !utils.EmailFormat(*req.Email) {
 			user.Email = *req.Email
 		}
 	}
