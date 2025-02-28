@@ -81,7 +81,7 @@
 
 | VSCode 网页版                                        | Jupyter Notebook                                 | Grafana 资源监控                 |
 | ---------------------------------------------------- | ----------------------------------------------- | -------------------------------- |
-| ![image-20250116010708107](./assets/code-server/.png) | ![Jupyter NoteBook](./assets/juper-notebook.png) | ![Grafana](./assets/grafana.png) |
+| ![image-20250116010708107](./assets/code-server.png) | ![Jupyter NoteBook](./assets/juper-notebook.png) | ![Grafana](./assets/grafana.png) |
 
 ### 系统管理
 
