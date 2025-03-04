@@ -62,7 +62,7 @@ func createInstance(ip string, port int, apikey string,
 	if config.GetSystemMountDir() != "" {
 		data.Binds = append(data.Binds, bindStruct{
 			Src:  config.GetSystemMountDir(),
-			Dest: "/root/megrez-pub",
+			Dest: "/root/megrez-mnt",
 		})
 	}
 
