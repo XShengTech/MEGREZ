@@ -56,15 +56,9 @@ const model = ref([
       {
         label: '使用文档',
         icon: 'pi pi-fw pi-book text-amber-500',
-        url: '#',
+        url: 'http://docs.megrez.xsheng-ai.com/guide/usage/',
         target: '_blank'
       },
-      // {
-      //     label: '开源信息',
-      //     icon: 'pi pi-fw pi-cog',
-      //     url: 'https://github.com/primefaces/sakai-vue',
-      //     target: '_blank'
-      // },
     ]
   }
 ]);
