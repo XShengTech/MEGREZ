@@ -27,6 +27,7 @@ var (
 )
 
 func main() {
+	l.SetModel("main")
 	l.Info("Branch: %s", BRANCH)
 	l.Info("Version: %s", VERSION)
 	l.Info("Commit: %s", COMMIT)
