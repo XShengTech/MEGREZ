@@ -4,9 +4,35 @@ const layoutConfig = reactive({
   preset: 'Aura',
   primary: 'blue',
   surface: null,
-  darkTheme: false,
+  darkTheme: window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches,
   menuMode: 'static'
 });
+
+// Listen for changes to the prefers-color-scheme media query
+if (window.matchMedia) {
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    layoutConfig.darkTheme = e.matches;
+    toggleDarkMode();
+  });
+}
+
+const toggleDarkMode = () => {
+  if (!document.startViewTransition) {
+    executeDarkModeToggle();
+    return;
+  }
+
+  document.startViewTransition(() => executeDarkModeToggle(event));
+};
+
+if (layoutConfig.darkTheme) {
+  toggleDarkMode()
+}
+
+const executeDarkModeToggle = () => {
+  layoutConfig.darkTheme = !layoutConfig.darkTheme;
+  document.documentElement.classList.toggle('app-dark');
+};
 
 const layoutState = reactive({
   staticMenuDesktopInactive: false,
@@ -37,21 +63,6 @@ export function useLayout() {
 
   const setMenuMode = (mode) => {
     layoutConfig.menuMode = mode;
-  };
-
-  const toggleDarkMode = () => {
-    if (!document.startViewTransition) {
-      executeDarkModeToggle();
-
-      return;
-    }
-
-    document.startViewTransition(() => executeDarkModeToggle(event));
-  };
-
-  const executeDarkModeToggle = () => {
-    layoutConfig.darkTheme = !layoutConfig.darkTheme;
-    document.documentElement.classList.toggle('app-dark');
   };
 
   const onMenuToggle = () => {
