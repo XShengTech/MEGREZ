@@ -43,9 +43,19 @@ func modify(serverID uint, data Data) (err error) {
 		return errors.New("instance status error")
 	}
 
-	if data.CpuOnly == instance.CpuOnly && data.CpuOnly {
-		lc.Error("instance already cpu_only mode")
-		return errors.New("instance already cpu_only mode")
+	hasChanges := false
+	if data.CpuOnly != instance.CpuOnly {
+		hasChanges = true
+	}
+	if data.GpuCount != nil && *data.GpuCount != instance.GpuCount {
+		hasChanges = true
+	}
+	if data.VolumeSize != nil && *data.VolumeSize != instance.VolumeSize {
+		hasChanges = true
+	}
+	if !hasChanges {
+		lc.Error("no changes")
+		return errors.New("no changes")
 	}
 
 	oldVolumeSize := instance.VolumeSize

@@ -72,7 +72,17 @@ func modifyHandler(ctx iris.Context) {
 		return
 	}
 
-	if req.CpuOnly == instance.CpuOnly && req.CpuOnly {
+	hasChanges := false
+	if req.CpuOnly != instance.CpuOnly {
+		hasChanges = true
+	}
+	if req.GpuCount != nil && *req.GpuCount != instance.GpuCount {
+		hasChanges = true
+	}
+	if req.VolumeSize != nil && *req.VolumeSize != instance.VolumeSize {
+		hasChanges = true
+	}
+	if !hasChanges {
 		middleware.Error(ctx, middleware.CodeBadRequest, iris.StatusBadRequest)
 		return
 	}
