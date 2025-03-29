@@ -121,13 +121,13 @@
         </Fieldset>
         <Fieldset legend="GPU">
           <span v-if="instanceDetail.gpu_count !== 0">{{ instanceDetail.gpu_type }} * {{ instanceDetail.gpu_count
-          }}</span>
+            }}</span>
           <span v-else>无卡模式</span>
         </Fieldset>
         <div class="flex flex-col md:flex-row gap-4">
           <Fieldset class="flex flex-wrap gap-2 w-full" legend="CPU">
             <span v-if="instanceDetail.gpu_count !== 0">{{ instanceDetail.cpu_count_per_gpu * instanceDetail.gpu_count
-            }}
+              }}
               核</span>
             <span v-else>1 核</span>
           </Fieldset>
@@ -498,6 +498,9 @@ const instanceModify = async () => {
   setTimeout(() => {
     getInstances()
   }, 100);
+  if (instanceConfiguration.value.cpu_only) {
+    delete instanceConfiguration.value.gpu_count
+  }
   await api.AdminInstancesModify(instanceDetail.value.id, instanceConfiguration.value).then(async (res) => {
     toast.add({ severity: 'success', summary: '调整配置', detail: '已调整配置', life: 3000 });
     instanceModifyVisible.value = false

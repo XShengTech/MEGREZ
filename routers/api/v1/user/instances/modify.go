@@ -39,6 +39,10 @@ func modifyHandler(ctx iris.Context) {
 		return
 	}
 
+	if req.CpuOnly {
+		req.GpuCount = nil
+	}
+
 	if req.GpuCount != nil {
 		if *req.GpuCount < 0 {
 			middleware.Error(ctx, middleware.CodeBadRequest, iris.StatusBadRequest)
