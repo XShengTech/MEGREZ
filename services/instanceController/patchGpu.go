@@ -45,6 +45,15 @@ func patchGpu(ip string, port int, apikey string,
 				Dest: "/root/megrez-tmp",
 			},
 		}
+		data.GpuPatch = &gpuPatchStruct{
+			GpuCount: gpuCount,
+		}
+		data.CpuPatch = &cpuPatchStruct{
+			CpuCount: cpuCountPerGpu * gpuCount,
+		}
+		data.MemoryPatch = &MemoryPatchStruct{
+			Memory: strconv.Itoa(memoryPerGpu*gpuCount) + "GB",
+		}
 	}
 
 	reqBytes, err := json.Marshal(data)
