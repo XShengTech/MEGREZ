@@ -96,7 +96,7 @@
     </Popover>
   </div>
 
-  <Dialog v-model:visible="serverModifyVisible" modal :header="'编辑节点 - ' + serverDetail.name"
+  <Dialog v-model:visible="serverModifyVisible" modal :header="'编辑节点 - ' + serverDetail.name" :draggable="false"
     :style="{ width: '42rem' }">
     <span class="text-surface-500 dark:text-surface-400 block mb-6">编辑节点配置</span>
     <div class="flex items-center gap-0 mb-4">
@@ -183,7 +183,7 @@
     </div>
   </Dialog>
 
-  <Dialog v-model:visible="serverAddVisible" modal :header="'添加节点'" :style="{ width: '42rem' }">
+  <Dialog v-model:visible="serverAddVisible" modal :header="'添加节点'" :draggable="false" :style="{ width: '42rem' }">
     <span class="text-surface-500 dark:text-surface-400 block mb-6">添加节点配置</span>
     <div class="flex items-center gap-0 mb-4">
       <label class="font-semibold w-20">名称:</label>
@@ -269,7 +269,7 @@
     </div>
   </Dialog>
 
-  <ConfirmDialog></ConfirmDialog>
+  <ConfirmDialog :draggable="false"></ConfirmDialog>
 </template>
 
 <script setup>

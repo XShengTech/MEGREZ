@@ -39,7 +39,8 @@
     </Paginator>
   </div>
 
-  <Dialog v-model:visible="userModifyVisible" modal :header="'编辑用户 - ' + userData.username" :style="{ width: '25rem' }">
+  <Dialog v-model:visible="userModifyVisible" modal :header="'编辑用户 - ' + userData.username" :draggable="false"
+    :style="{ width: '25rem' }">
     <span class="text-surface-500 dark:text-surface-400 block mb-6">编辑用户信息</span>
     <div class="flex items-center gap-0 mb-4">
       <label class="font-semibold w-20">邮箱:</label>
@@ -61,7 +62,7 @@
     </div>
   </Dialog>
 
-  <ConfirmDialog></ConfirmDialog>
+  <ConfirmDialog :draggable="false"></ConfirmDialog>
 </template>
 
 <script setup>

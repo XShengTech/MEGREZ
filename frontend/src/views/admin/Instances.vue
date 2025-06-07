@@ -121,13 +121,13 @@
         </Fieldset>
         <Fieldset legend="GPU">
           <span v-if="instanceDetail.gpu_count !== 0">{{ instanceDetail.gpu_type }} * {{ instanceDetail.gpu_count
-            }}</span>
+          }}</span>
           <span v-else>无卡模式</span>
         </Fieldset>
         <div class="flex flex-col md:flex-row gap-4">
           <Fieldset class="flex flex-wrap gap-2 w-full" legend="CPU">
             <span v-if="instanceDetail.gpu_count !== 0">{{ instanceDetail.cpu_count_per_gpu * instanceDetail.gpu_count
-              }}
+            }}
               核</span>
             <span v-else>1 核</span>
           </Fieldset>
@@ -225,7 +225,7 @@
     </template>
   </Drawer>
 
-  <ConfirmDialog></ConfirmDialog>
+  <ConfirmDialog :draggable="false"></ConfirmDialog>
 </template>
 
 <script setup>
