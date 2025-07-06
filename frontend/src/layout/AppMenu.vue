@@ -67,14 +67,9 @@ const adminModel = ref({
   label: '系统设置',
   items: [
     {
-      label: '实例管理',
-      icon: 'pi pi-fw pi-desktop text-lime-500',
+      label: '管理后台',
+      icon: 'pi pi-fw pi-sliders-h text-yellow-500',
       to: '/admin/instances'
-    },
-    {
-      label: '用户管理',
-      icon: 'pi pi-fw pi-users text-indigo-500',
-      to: '/admin/users'
     },
   ]
 })
@@ -83,24 +78,9 @@ const superAdminModel = ref({
   label: '系统设置',
   items: [
     {
-      label: '节点管理',
-      icon: 'pi pi-fw pi-server text-yellow-400',
+      label: '管理后台',
+      icon: 'pi pi-fw pi-sliders-h text-yellow-400',
       to: '/admin/servers'
-    },
-    {
-      label: '实例管理',
-      icon: 'pi pi-fw pi-desktop text-lime-500',
-      to: '/admin/instances'
-    },
-    {
-      label: '镜像管理',
-      icon: 'pi pi-fw pi-images text-teal-500',
-      to: '/admin/images'
-    },
-    {
-      label: '用户管理',
-      icon: 'pi pi-fw pi-users text-indigo-500',
-      to: '/admin/users'
     },
   ]
 })

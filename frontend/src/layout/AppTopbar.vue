@@ -39,7 +39,7 @@
     </div>
   </div>
 
-  <Menu ref="profileMenu" :model="instanceMenuItems" :popup="true" @blur="profileMenuActive = false" />
+  <Menu ref="profileMenu" :model="profileMenuItems" :popup="true" @blur="profileMenuActive = false" />
 </template>
 
 
@@ -61,7 +61,7 @@ const username = ref('');
 
 const profileMenu = ref(null);
 const profileMenuActive = ref(false);
-const instanceMenuItems = [
+const profileMenuItems = ref([
   {
     label: '个人信息',
     icon: 'pi pi-user !text-cyan-500',
@@ -79,6 +79,12 @@ const instanceMenuItems = [
     }
   },
   {
+    separator: true
+  },
+]);
+
+const profileExitItems = ref([
+  {
     label: '退出登录',
     icon: 'pi pi-sign-out',
     command: () => {
@@ -86,7 +92,35 @@ const instanceMenuItems = [
       logout();
     }
   }
-];
+]);
+
+const profileAdminItems = ref([
+  {
+    label: '管理后台',
+    icon: 'pi pi-sliders-h !text-yellow-400',
+    command: () => {
+      profileMenu.value.hide();
+      router.push('/admin/instances');
+    }
+  },
+  {
+    separator: true
+  },
+])
+
+const profileSuperadminItems = ref([
+  {
+    label: '管理后台',
+    icon: 'pi pi-sliders-h !text-yellow-400',
+    command: () => {
+      profileMenu.value.hide();
+      router.push('/admin/servers');
+    }
+  },
+  {
+    separator: true
+  },
+])
 
 const showMenu = (event) => {
   profileMenu.value.show(event);
@@ -105,6 +139,14 @@ const logout = () => {
 
 onMounted(() => {
   username.value = profileStore.username;
+
+  if (profileStore.isSuperAdmin) {
+    profileMenuItems.value.push(...profileSuperadminItems.value);
+  } else if (profileStore.isAdmin) {
+    profileMenuItems.value.push(...profileAdminItems.value);
+  }
+
+  profileMenuItems.value.push(...profileExitItems.value);
 });
 
 </script>

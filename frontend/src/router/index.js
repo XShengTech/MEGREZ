@@ -17,6 +17,7 @@ import Instances from '@/views/admin/Instances.vue';
 import Servers from '@/views/admin/Servers.vue';
 import Users from '@/views/admin/Users.vue';
 
+import AppAdminLayout from '@/layout/AppAdminLayout.vue';
 import NotFound from '@/views/NotFound.vue';
 
 const router = createRouter({
@@ -70,24 +71,31 @@ const router = createRouter({
           path: 'settings',
           name: 'settings',
           component: Settings
-        },
+        }
+      ]
+    },
+    {
+      path: '/admin/',
+      name: 'admin-dashboard',
+      component: AppAdminLayout,
+      children: [
         {
-          path: 'admin/images',
+          path: 'images',
           name: 'admin-images',
           component: Images
         },
         {
-          path: 'admin/instances',
+          path: 'instances',
           name: 'admin-instances',
           component: Instances
         },
         {
-          path: 'admin/servers',
+          path: 'servers',
           name: 'admin-servers',
           component: Servers
         },
         {
-          path: 'admin/users',
+          path: 'users',
           name: 'admin-users',
           component: Users
         }
