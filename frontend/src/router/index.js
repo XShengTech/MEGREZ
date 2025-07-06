@@ -1,4 +1,5 @@
 import AppLayout from '@/layout/AppLayout.vue';
+import { useProfileStore } from '@/stores/profile';
 import { createRouter, createWebHistory } from 'vue-router';
 
 import Forget from '@/views/Forget.vue';
@@ -98,6 +99,21 @@ const router = createRouter({
       component: NotFound
     }
   ]
+});
+
+router.beforeEach((to, from, next) => {
+  const profileStore = useProfileStore();
+  if (to.path.startsWith('/admin')) {
+    if (!profileStore.isAdmin && !profileStore.isSuperAdmin) {
+      next({ name: 'not-found' });
+      return;
+    }
+    if ((to.path.endsWith('servers') || to.path.endsWith('settings')) && !profileStore.isSuperAdmin) {
+      next({ name: 'not-found' });
+      return;
+    }
+  }
+  next();
 });
 
 export default router;
