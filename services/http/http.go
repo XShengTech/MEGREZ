@@ -51,6 +51,13 @@ func Start() {
 			LogLevel:            "disable",
 			Charset:             "UTF-8",
 			EnableOptimizations: true,
+			RemoteAddrHeaders: []string{
+				"X-Real-Ip",
+				"X-Forwarded-For",
+				"CF-Connecting-IP",
+				"True-Client-Ip",
+				"X-Appengine-Remote-Addr",
+			},
 		}),
 		iris.WithoutServerError(iris.ErrServerClosed),
 	)
