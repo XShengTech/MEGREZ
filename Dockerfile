@@ -1,4 +1,4 @@
-FROM golang:1.23.6-alpine AS builder
+FROM golang:1.24-alpine AS builder
 LABEL stage=gobuilder \
       mainatiner=https://github.com/XShengTech/MEGREZ
 
@@ -28,6 +28,9 @@ VOLUME /app
 WORKDIR /app
 
 COPY --from=builder /build/megrez /app/megrez
+
+COPY --from=builder /usr/local/go/lib/time/zoneinfo.zip /opt/zoneinfo.zip
+ENV ZONEINFO=/opt/zoneinfo.zip
 
 EXPOSE 34567
 
