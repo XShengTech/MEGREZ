@@ -27,6 +27,8 @@ FROM alpine
 VOLUME /app
 WORKDIR /app
 
+RUN apk add --no-cache tzdata
+
 COPY --from=builder /build/megrez /app/megrez
 
 COPY --from=builder /usr/local/go/lib/time/zoneinfo.zip /opt/zoneinfo.zip
