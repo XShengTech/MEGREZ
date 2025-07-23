@@ -24,7 +24,6 @@ RUN BRANCH=$(git rev-parse --abbrev-ref HEAD) && \
 
 FROM alpine
 
-VOLUME /app
 WORKDIR /app
 
 RUN apk add --no-cache tzdata
