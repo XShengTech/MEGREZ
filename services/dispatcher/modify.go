@@ -10,12 +10,6 @@ import (
 	"strconv"
 )
 
-type modifyDataStruct struct {
-	CpuOnly    bool `json:"cpu_only"`
-	GpuCount   *int `json:"gpu_count"`
-	VolumeSize *int `json:"volume_size"`
-}
-
 func modify(serverID uint, data Data) (err error) {
 	lc := l.Clone()
 	lc.SetFunction("modify")
@@ -71,6 +65,7 @@ func modify(serverID uint, data Data) (err error) {
 	err = instanceController.Patch(&instance, gpuCount, volumeSize, data.CpuOnly)
 	if err != nil {
 		ctx := context.Background()
+		redis.RawDB.IncrBy(ctx, "remain_gpu:server:"+strconv.Itoa(int(serverID)), int64(gpuCount))
 		redis.RawDB.IncrBy(ctx, "remain_volume:server:"+strconv.Itoa(int(serverID)), int64(volumeSize-oldVolumeSize))
 		database.DB.Model(&instance).Update("status", models.InstanceStatusFail).Update("from_action", models.InstanceActionModify)
 		lc.Error("patch instance error: %v", err)
