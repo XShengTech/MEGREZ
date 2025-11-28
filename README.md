@@ -135,6 +135,17 @@
 若您对源码做出修改/扩展，同样需要以 AGPL-3.0-or-later 开源，您可以以 `Powered by 晓声智能科技, modified by xxx` 格式在页脚注明。
 
 
+## 📌 贡献者许可协议 (CLA)
+
+> [!NOTE]
+> 本项目要求贡献者签署我们的贡献者许可协议（CLA）。  
+> 协议: https://github.com/XShengTech/.github/blob/main/CLA.md
+
+
+> [!NOTE]
+> This project requires contributors to sign our Contributor License Agreement (CLA).  
+> See: https://github.com/XShengTech/.github/blob/main/CLA.md
+
 
 ## 🙏 特别鸣谢
 
