@@ -45,14 +45,12 @@ func main() {
 		l.Close()
 	}()
 	defer func() {
-		defer func() {
-			if err := recover(); err != nil {
-				l.Error("Panic: %v", err)
-				buf := make([]byte, 1024)
-				n := runtime.Stack(buf, false)
-				l.Error("Stack trace: \n%s", buf[:n])
-			}
-		}()
+		if err := recover(); err != nil {
+			l.Error("Panic: %v", err)
+			buf := make([]byte, 1024)
+			n := runtime.Stack(buf, false)
+			l.Error("Stack trace: \n%s", buf[:n])
+		}
 	}()
 
 	logger.InitLogger(config.GetLogLevel(), config.GetLogFile())
